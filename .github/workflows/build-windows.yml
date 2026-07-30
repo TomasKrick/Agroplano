@@ -1,0 +1,76 @@
+name: Build AgroPlano Management Demo for Windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/**"
+      - "desktop/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/build-windows.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "app/**"
+      - "desktop/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/build-windows.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    name: AgroPlano Management Demo · Tauri 2 · Windows
+    runs-on: windows-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: desktop
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Install stable Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Restore Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri -> target
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Build executable and installers
+        env:
+          AGROPLANO_SUPABASE_URL: ${{ vars.AGROPLANO_SUPABASE_URL }}
+          AGROPLANO_SUPABASE_PUBLISHABLE_KEY: ${{ vars.AGROPLANO_SUPABASE_PUBLISHABLE_KEY }}
+          AGROPLANO_WORKSPACE_ID: ${{ vars.AGROPLANO_WORKSPACE_ID }}
+        run: npm run build
+
+      - name: Upload AgroPlano Management Demo artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: agroplano-gestion-demo-windows
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            desktop/src-tauri/Cargo.lock
+            desktop/src-tauri/target/release/agroplano_demo.exe
+            desktop/src-tauri/target/release/bundle/nsis/*.exe
+            desktop/src-tauri/target/release/bundle/msi/*.msi

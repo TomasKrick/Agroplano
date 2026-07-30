@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Ícono genérico de AgroPlano</title>
+  <desc id="desc">Parcelas rurales estilizadas sobre un fondo verde con un sol ámbar.</desc>
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f7d48"/>
+      <stop offset="1" stop-color="#173f30"/>
+    </linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffdf4"/>
+      <stop offset="1" stop-color="#e8e0c9"/>
+    </linearGradient>
+  </defs>
+  <rect x="12" y="12" width="488" height="488" rx="108" fill="url(#ground)"/>
+  <circle cx="389" cy="118" r="48" fill="#efaa32"/>
+  <path d="M87 155C155 132 231 143 300 133C336 128 369 139 398 153V403C339 390 285 402 229 394C177 386 130 397 87 382Z" fill="url(#field)"/>
+  <path d="M88 237C155 224 220 237 284 228C322 223 361 226 399 238M88 313C148 301 212 315 277 305C318 299 359 305 399 313M192 142L187 392M292 135L286 396" fill="none" stroke="#2f7d48" stroke-width="17" stroke-linecap="round"/>
+  <path d="M238 139C228 210 247 274 237 395" fill="none" stroke="#b89c72" stroke-width="9" stroke-linecap="round"/>
+</svg>

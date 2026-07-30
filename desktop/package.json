@@ -1,0 +1,18 @@
+{
+  "name": "agroplano-demo-desktop",
+  "version": "1.3.0",
+  "private": true,
+  "type": "module",
+  "author": "Tomás Krick",
+  "license": "MIT",
+  "description": "Bilingual AgroPlano Management Demo desktop application with synthetic data",
+  "scripts": {
+    "prepare:dist": "node ./scripts/copy-app.mjs",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  }
+}

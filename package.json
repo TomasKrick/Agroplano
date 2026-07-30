@@ -1,0 +1,24 @@
+{
+  "name": "agroplano-demo",
+  "version": "1.3.0",
+  "private": true,
+  "author": "Tomás Krick",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TomasKrick/agroplano.git"
+  },
+  "homepage": "https://tomaskrick.github.io/agroplano/",
+  "description": "AgroPlano Management Demo: bilingual farm operations application with synthetic geometry and data",
+  "scripts": {
+    "serve": "node tests/dev-server.mjs",
+    "check": "node tests/static-check.mjs",
+    "test": "npm run check && node tests/dom-smoke.mjs && node tests/v110-regression.mjs && node tests/v120-regression.mjs && node tests/i18n-smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "devDependencies": {
+    "jsdom": "^29.0.0"
+  }
+}

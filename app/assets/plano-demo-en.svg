@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="962" viewBox="0 0 1000 650" role="img" aria-labelledby="title desc">
+  <title id="title">Synthetic AgroPlano farm map</title>
+  <desc id="desc">Fictional map background with four sectors, roads, a stream, water points, and handling facilities. It does not represent a real farm.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffef9"/>
+      <stop offset="1" stop-color="#f8f5eb"/>
+    </linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#edf5e8"/>
+      <stop offset="1" stop-color="#f8f7ee"/>
+    </linearGradient>
+    <pattern id="microGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#6d7e68" stroke-opacity=".055" stroke-width=".8"/>
+    </pattern>
+    <filter id="fieldShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+      <feOffset in="blur" dy="4" result="offset"/>
+      <feColorMatrix in="offset" type="matrix" values="0 0 0 0 .15 0 0 0 0 .19 0 0 0 0 .15 0 0 0 .14 0" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="650" fill="url(#paper)"/>
+  <rect width="1000" height="650" fill="url(#microGrid)"/>
+
+  <g filter="url(#fieldShadow)">
+    <path d="M45 36C162 24 270 30 382 29C504 28 596 35 704 29C805 24 898 29 954 42L960 602C860 618 754 610 650 614C533 619 433 608 326 616C218 624 120 614 56 602C43 466 45 317 43 180C42 122 42 74 45 36Z" fill="url(#field)" stroke="#61725f" stroke-width="2.5"/>
+    <path d="M49 40C120 31 189 32 264 35L262 613C188 616 119 612 57 601Z" fill="#edf4e4" fill-opacity=".66"/>
+    <path d="M266 35C344 32 420 30 499 32L499 611C418 608 342 610 263 614Z" fill="#f4efdf" fill-opacity=".7"/>
+    <path d="M501 32C575 33 649 33 722 29L720 613C647 616 573 612 500 611Z" fill="#e8f1eb" fill-opacity=".7"/>
+    <path d="M724 29C818 25 900 29 954 42L960 602C884 615 801 611 720 613Z" fill="#f2eadf" fill-opacity=".7"/>
+    <g fill="none" stroke="#637261" stroke-opacity=".17" stroke-width="1.4">
+      <path d="M56 137C169 133 263 143 367 138C479 133 584 142 697 136C786 130 876 135 954 139"/>
+      <path d="M52 228C150 224 255 233 365 229C476 225 586 234 699 227C790 221 877 226 956 231"/>
+      <path d="M52 322C152 317 259 327 366 323C478 319 589 326 699 319C790 313 875 318 957 323"/>
+      <path d="M53 416C153 411 257 421 365 417C475 413 588 421 699 414C790 408 877 414 958 418"/>
+      <path d="M54 510C153 505 257 515 365 511C474 507 588 515 699 508C790 502 877 508 958 512"/>
+      <path d="M266 35L263 614M500 32L500 611M723 29L720 613"/>
+    </g>
+  </g>
+
+  <g aria-label="Internal roads">
+    <path d="M510 32C501 149 523 242 511 326C501 420 521 520 512 620" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" opacity=".95"/>
+    <path d="M510 32C501 149 523 242 511 326C501 420 521 520 512 620" fill="none" stroke="#bda98a" stroke-width="15" stroke-linecap="round" opacity=".8"/>
+    <path d="M44 326C240 312 375 341 514 326C685 306 802 334 958 322" fill="none" stroke="#fff" stroke-width="17" stroke-linecap="round" opacity=".94"/>
+    <path d="M44 326C240 312 375 341 514 326C685 306 802 334 958 322" fill="none" stroke="#c5b394" stroke-width="10" stroke-linecap="round" opacity=".82"/>
+  </g>
+
+  <g aria-label="Fictional stream">
+    <path d="M210 33C172 125 245 198 210 279C178 353 238 443 198 530C180 570 194 602 170 623" fill="none" stroke="#f9ffff" stroke-width="13" stroke-linecap="round" opacity=".9"/>
+    <path d="M210 33C172 125 245 198 210 279C178 353 238 443 198 530C180 570 194 602 170 623" fill="none" stroke="#83b9c6" stroke-width="5" stroke-linecap="round" stroke-dasharray="11 8" opacity=".86"/>
+  </g>
+
+  <g font-family="system-ui,Segoe UI,sans-serif" font-weight="800" letter-spacing="1.5" fill="#50604d" opacity=".6">
+    <text x="155" y="62" text-anchor="middle" font-size="12">AURORA SECTOR</text>
+    <text x="384" y="62" text-anchor="middle" font-size="12">COMPASS SECTOR</text>
+    <text x="620" y="62" text-anchor="middle" font-size="12">STREAM SECTOR</text>
+    <text x="839" y="62" text-anchor="middle" font-size="12">DELTA SECTOR</text>
+  </g>
+
+  <g aria-label="Illustrative infrastructure" font-family="system-ui,Segoe UI,sans-serif">
+    <g transform="translate(302 102)"><circle r="8" fill="#428bab" stroke="#fff" stroke-width="3"/><circle r="3" fill="#c9ecf2"/><text x="13" y="3" font-size="9" font-weight="750" fill="#49636b">Water A</text></g>
+    <g transform="translate(438 276)"><circle r="8" fill="#428bab" stroke="#fff" stroke-width="3"/><circle r="3" fill="#c9ecf2"/><text x="13" y="3" font-size="9" font-weight="750" fill="#49636b">Water B</text></g>
+    <g transform="translate(606 470)"><circle r="8" fill="#428bab" stroke="#fff" stroke-width="3"/><circle r="3" fill="#c9ecf2"/><text x="13" y="3" font-size="9" font-weight="750" fill="#49636b">Water C</text></g>
+    <g transform="translate(846 256)"><circle r="8" fill="#428bab" stroke="#fff" stroke-width="3"/><circle r="3" fill="#c9ecf2"/><text x="13" y="3" font-size="9" font-weight="750" fill="#49636b">Water D</text></g>
+    <g transform="translate(840 552)">
+      <rect x="-44" y="-21" width="88" height="42" rx="5" fill="#d8c09c" stroke="#7b6548" stroke-width="2"/>
+      <path d="M-29-21V21M-13-21V21M3-21V21M19-21V21M-44 0H44" stroke="#8b7150" stroke-width="1.4"/>
+      <text x="0" y="37" text-anchor="middle" font-size="9" font-weight="800" fill="#604c36">Handling facilities</text>
+    </g>
+  </g>
+
+  <g transform="translate(925 75)" font-family="system-ui,Segoe UI,sans-serif">
+    <circle r="27" fill="#fff" fill-opacity=".9" stroke="#81907d" stroke-width="1.5"/>
+    <path d="M0-20L7 4L0 0L-7 4Z" fill="#245d3c"/>
+    <text y="-31" text-anchor="middle" font-size="11" font-weight="900" fill="#344436">N</text>
+  </g>
+
+  <text x="50" y="633" font-family="system-ui,Segoe UI,sans-serif" font-size="8" font-weight="750" fill="#687166">SYNTHETIC MAP · ILLUSTRATIVE ORIENTATION · NOT TO SCALE</text>
+</svg>
