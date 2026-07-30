@@ -57,7 +57,7 @@ and useful feedback, not another reporting system maintained after the fact.
 
 ## What this repository demonstrates
 
-I owned product direction and delivery end to end, and worked hands-on on
+I owned product direction and delivery end to end, and contributed hands-on to
 implementation, debugging, testing, documentation and releases:
 
 - translated farm routines into a data model, ten operational views and
@@ -75,8 +75,8 @@ implementation, debugging, testing, documentation and releases:
 
 ### Private deployment context
 
-Separately, I led the development and rollout of a private application used by
-a small Argentine agricultural team. My role included requirements and
+Separately, I led product direction and rollout of a private application used
+by a small Argentine agricultural team. My role included requirements and
 workflow modeling, hands-on implementation and debugging, user validation,
 Windows packaging, layout testing at 1366×768, and installation and
 synchronization checks across multiple PCs. That repository, its operational
