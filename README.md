@@ -166,7 +166,9 @@ public-file allowlists, icon validity and common secret/coordinate patterns.
 The **Build Windows** workflow is configured to produce a portable executable
 plus NSIS and MSI installers with the independent identity
 `com.agroplano.demo`. Artifacts are treated as releasable only after a green
-Windows run. See
+Windows run. The Rust dependency graph is pinned in
+[`Cargo.lock`](desktop/src-tauri/Cargo.lock) and validated with
+`cargo metadata --locked` before each build. See
 [installation and updates](docs/INSTALACION_Y_ACTUALIZACION.md).
 
 ## Optional shared mode
