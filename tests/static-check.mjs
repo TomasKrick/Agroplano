@@ -7,7 +7,7 @@ const ROOT=process.cwd();
 const required=[
   'app/index.html','app/i18n.js','app/demo-data.js','app/config.js','app/cloud-sync.js',
   'app/manifest.webmanifest','app/sw.js','app/assets/plano-demo.svg','app/assets/plano-demo-en.svg',
-  'app/assets/icon.svg','app/assets/icon-192.png','app/assets/icon-512.png',
+  'app/assets/icon.svg','app/assets/icon-192.png','app/assets/icon-512.png','app/assets/social-preview.png',
   'README.md','docs/DATOS_FICTICIOS.md','docs/PRIVACIDAD_Y_SEPARACION.md',
   'docs/SUPABASE_OPCIONAL.md','package.json','package-lock.json',
   'supabase/migrations/001_agroplano_shared_state.sql',
@@ -37,6 +37,7 @@ async function assertPng(path,width,height){
 await Promise.all([
   assertPng('app/assets/icon-192.png',192,192),
   assertPng('app/assets/icon-512.png',512,512),
+  assertPng('app/assets/social-preview.png',1200,627),
   assertPng('desktop/src-tauri/icons/32x32.png',32,32),
   assertPng('desktop/src-tauri/icons/128x128.png',128,128),
   assertPng('desktop/src-tauri/icons/128x128@2x.png',256,256)
@@ -66,6 +67,17 @@ includesAll(html,[
   './i18n.js','./demo-data.js','./config.js','./cloud-sync.js','assets/plano-demo.svg','assets/plano-demo-en.svg',
   'id="languageSelect"','>English<','>Español<'
 ],'Aplicación');
+includesAll(html,[
+  '<link rel="canonical" href="https://tomaskrick.github.io/Agroplano/" />',
+  '<meta property="og:type" content="website" />',
+  '<meta property="og:url" content="https://tomaskrick.github.io/Agroplano/" />',
+  '<meta property="og:title" content="AgroPlano — Livestock Operations &amp; Grazing Decision Support" />',
+  '<meta property="og:description" content="Bilingual, offline-first public portfolio edition built exclusively with synthetic data and geometry." />',
+  '<meta property="og:image" content="https://tomaskrick.github.io/Agroplano/assets/social-preview.png" />',
+  '<meta property="og:image:width" content="1200" />',
+  '<meta property="og:image:height" content="627" />',
+  '<meta name="twitter:card" content="summary_large_image" />'
+],'Metadatos públicos');
 includesAll(i18nSource,[
   'agroplano_demo_language_v1','DEFAULT_LOCALE = "en"','window.AgroPlanoI18n',
   'setLocale','getLocale','SYNTHETIC DATA',
@@ -294,7 +306,7 @@ async function allFiles(root){
 const inventory=await allFiles(ROOT);
 const forbiddenExtensions=new Set(['.csv','.xls','.xlsx','.pdf','.zip','.db','.sqlite','.sqlite3','.pem','.p12','.bak','.exe','.msi']);
 const allowedBinaryAssets=new Set([
-  'app/assets/icon-192.png','app/assets/icon-512.png',
+  'app/assets/icon-192.png','app/assets/icon-512.png','app/assets/social-preview.png',
   'desktop/src-tauri/icons/icon.ico','desktop/src-tauri/icons/32x32.png',
   'desktop/src-tauri/icons/128x128.png','desktop/src-tauri/icons/128x128@2x.png'
 ]);
