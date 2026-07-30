@@ -6,20 +6,20 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **AgroPlano** is a bilingual English/Spanish, offline-first application for
-livestock operations: interactive field maps, auditable cattle movements,
-grazing plans, work queues and decision-oriented KPIs in one interface.
+livestock operations: interactive field maps, traceable cattle movements,
+grazing plans, work queues and decision-support indicators in one interface.
 
 The public demo opens in English and can be switched to Spanish from the
 header. It uses a deterministic synthetic farm, fictional herds and artificial
 SVG geometry.
 
-> **Synthetic data only · not for operating a real farm.** This is a
-> privacy-sanitized portfolio edition of an application codebase developed
-> alongside a separate private system used in a real agricultural operation.
-> It shares selected generic application logic and architecture, but it is not
-> the production repository and does not claim feature-for-feature parity. No
-> production data, geometry, identifiers, credentials, backend configuration,
-> exports or private Git history are included.
+> **Synthetic data only · not for operating a real farm.** This is a separate,
+> privacy-sanitized public portfolio edition built from selected generic
+> workflows and architecture of a private system used in a real agricultural
+> operation. It is not the production repository and does not claim
+> feature-for-feature parity. No production data, geometry, identifiers,
+> credentials, backend configuration, exports or private Git history are
+> included.
 
 [**Launch the live demo**](https://tomaskrick.github.io/Agroplano/)
 · [English user guide](docs/USER_GUIDE.md)
@@ -51,18 +51,19 @@ split across paper, spreadsheets and chat:
 - stock reductions caused by sales or mortality;
 - which records are trustworthy enough to support a decision.
 
-AgroPlano joins spatial, temporal and inventory data in one auditable workflow.
+AgroPlano joins spatial, temporal and inventory data in one traceable workflow.
 It is designed for a small operational team that needs low-friction data entry
 and useful feedback, not another reporting system maintained after the fact.
 
 ## What this repository demonstrates
 
-I led the product and implementation end to end:
+I owned product direction and delivery end to end, and worked hands-on on
+implementation, debugging, testing, documentation and releases:
 
 - translated farm routines into a data model, ten operational views and
   acceptance criteria;
-- designed transactional movements, reversible audit trails, role boundaries
-  and data-quality guardrails;
+- defined and validated movement rules, eligibility-checked reversals, role
+  boundaries and data-quality guardrails;
 - defined decision metrics such as occupation, rest-versus-target,
   head-days per hectare, plan adherence and inventory consistency;
 - designed a bilingual presentation layer that does not rewrite stored domain
@@ -74,13 +75,15 @@ I led the product and implementation end to end:
 
 ### Private deployment context
 
-Separately, I built and deployed a private operating version for an Argentine
-agricultural business. I packaged its Windows application, tested the layout at
-1366×768, and validated installation and synchronization across multiple PCs.
-That repository, its operational data and its backend remain private; this
-public edition retains only generic product logic that is safe to show. It
-replaces operational data, geometry, identity, configuration, backend and Git
-history with synthetic or isolated public equivalents.
+Separately, I led the development and rollout of a private application used by
+a small Argentine agricultural team. My role included requirements and
+workflow modeling, hands-on implementation and debugging, user validation,
+Windows packaging, layout testing at 1366×768, and installation and
+synchronization checks across multiple PCs. That repository, its operational
+data and its backend remain private; this public edition retains only generic
+product logic that is safe to show. It replaces operational data, geometry,
+identity, configuration, backend and Git history with synthetic or isolated
+public equivalents.
 
 ## Product surface
 
@@ -120,7 +123,7 @@ flowchart TD
 1. **Offline first.** Core public-edition workflows run locally without an
    account or network connection. Cloud synchronization is an optional
    reference deployment.
-2. **One auditable movement.** A transfer closes the source occupation and
+2. **One traceable movement.** A transfer closes the source occupation and
    opens the destination as one application command with rollback on failure;
    sales and mortality update both stock and history.
 3. **Explicit consistency over silent repair.** Invalid dates, ambiguous herds
