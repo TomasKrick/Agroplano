@@ -12,7 +12,7 @@ const required=[
   'docs/SUPABASE_OPCIONAL.md','package.json','package-lock.json',
   'supabase/migrations/001_agroplano_shared_state.sql',
   'desktop/package.json','desktop/package-lock.json','desktop/scripts/copy-app.mjs',
-  'desktop/src-tauri/Cargo.toml','desktop/src-tauri/build.rs',
+  'desktop/src-tauri/Cargo.toml','desktop/src-tauri/Cargo.lock','desktop/src-tauri/build.rs',
   'desktop/src-tauri/src/main.rs','desktop/src-tauri/tauri.conf.json',
   'desktop/src-tauri/capabilities/default.json',
   '.github/workflows/build-windows.yml','.github/workflows/verify.yml',
@@ -56,6 +56,7 @@ const rootPackage=JSON.parse(await read('package.json'));
 const desktopPackage=JSON.parse(await read('desktop/package.json'));
 const tauriConfig=JSON.parse(await read('desktop/src-tauri/tauri.conf.json'));
 const manifest=JSON.parse(await read('app/manifest.webmanifest'));
+const cargoLock=await read('desktop/src-tauri/Cargo.lock');
 
 function includesAll(source,values,scope){
   for(const value of values)assert(source.includes(value),`${scope}: falta ${value}`);
@@ -199,6 +200,10 @@ const targets=tauriConfig.bundle?.targets||[];
 assert(tauriConfig.bundle?.active===true&&['nsis','msi'].every(target=>targets.includes(target)),'El build Windows debe producir NSIS y MSI');
 assert(/^name\s*=\s*"agroplano_demo"\s*$/m.test(cargo)&&/^version\s*=\s*"1\.3\.3"\s*$/m.test(cargo),'La identidad Rust debe ser agroplano_demo v1.3.3');
 assert(/^authors\s*=\s*\["Tomás Krick"\]\s*$/m.test(cargo)&&/^license\s*=\s*"MIT"\s*$/m.test(cargo),'Cargo debe declarar autor y licencia MIT');
+includesAll(cargoLock,[
+  'version = 3','name = "agroplano_demo"','version = "1.3.3"',
+  'registry+https://github.com/rust-lang/crates.io-index'
+],'Cargo lock');
 assert(manifest.name?.includes('AgroPlano')&&manifest.name?.includes('Demo'),'El manifiesto PWA debe conservar la identidad genérica');
 
 const csp=tauriConfig.app?.security?.csp||'';
@@ -227,6 +232,7 @@ for(const [pattern,message] of [
   [/actions\/checkout@v7/,'Debe usar checkout v7'],
   [/actions\/setup-node@v7/,'Debe usar setup-node v7'],
   [/node-version:\s*["']24["']/,'Debe usar Node 24'],
+  [/cargo metadata\s+--locked\s+--manifest-path\s+src-tauri\/Cargo\.toml/,'El build debe validar Cargo.lock antes de compilar'],
   [/actions\/upload-artifact@v7/,'Debe usar upload-artifact v7'],
   [/name:\s*agroplano-gestion-demo-windows/,'El artefacto debe tener nombre propio'],
   [/agroplano_demo\.exe/,'El ejecutable debe tener nombre propio'],
@@ -310,7 +316,7 @@ const allowedBinaryAssets=new Set([
   'desktop/src-tauri/icons/icon.ico','desktop/src-tauri/icons/32x32.png',
   'desktop/src-tauri/icons/128x128.png','desktop/src-tauri/icons/128x128@2x.png'
 ]);
-const textExtensions=new Set(['.html','.css','.js','.mjs','.json','.toml','.rs','.yml','.yaml','.md','.sql','.svg','.webmanifest','.gitignore']);
+const textExtensions=new Set(['.html','.css','.js','.mjs','.json','.toml','.lock','.rs','.yml','.yaml','.md','.sql','.svg','.webmanifest','.gitignore']);
 for(const path of inventory){
   const rel=relative(ROOT,path).replaceAll('\\','/'),name=basename(path).toLowerCase(),extension=extname(name).toLowerCase();
   const isText=textExtensions.has(extension)||name==='.gitignore'||name==='license';

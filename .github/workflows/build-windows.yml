@@ -53,6 +53,9 @@ jobs:
         with:
           workspaces: desktop/src-tauri -> target
 
+      - name: Verify Rust dependency lockfile
+        run: cargo metadata --locked --manifest-path src-tauri/Cargo.toml --format-version 1 --no-deps | Out-Null
+
       - name: Install JavaScript dependencies
         run: npm ci
 
