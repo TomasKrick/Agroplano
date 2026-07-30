@@ -76,7 +76,7 @@ const click=selector=>{
 
 await wait(180);
 assert.equal(browserErrors.length,0,`Errores al iniciar: ${browserErrors.join(' | ')}`);
-assert.equal(value('APP_VERSION'),'1.3.1');
+assert.equal(value('APP_VERSION'),'1.3.2');
 assert.equal(w.AGROPLANO_DEMO?.meta?.privacyClass,'public_demo');
 const infrastructure=json(`INFRASTRUCTURE.map(item=>({id:item.id,type:item.type,content:infraMarkerContent(item)}))`);
 assert.equal(infrastructure.filter(item=>item.type==='aguada').length,4);
@@ -84,6 +84,12 @@ assert.equal(infrastructure.filter(item=>item.type==='manga').length,1);
 assert.equal(infrastructure.filter(item=>item.type==='galpon').length,1);
 assert(infrastructure.every(item=>!['casa','house'].includes(item.type)),'La infraestructura no debe inferir viviendas desde nombres o códigos');
 assert(infrastructure.filter(item=>item.type==='aguada').every(item=>item.content.cls==='water'),'Las aguadas sintéticas deben usar su tipo de agua');
+const fixturePlannerAudit=json(`(()=>{
+  const range=plannerRange();
+  const decision=plannerDecisionMetrics(officialLots(),activeGrazingPeriods(),range.start,range.endExclusive);
+  return {pairs:decision.pairs.length,incomplete:decision.incomplete.length,alerts:decision.alertPeriodIds.size};
+})()`);
+assert.deepEqual(fixturePlannerAudit,{pairs:0,incomplete:0,alerts:1},'El fixture debe demostrar una validación deliberada sin parecer corrupto');
 
 const lotA='demo-lot-01',lotB='demo-lot-02',lotC='demo-lot-03';
 
@@ -184,5 +190,5 @@ assert.match(value('window.__doubleSubmitMessage'),/ya se está procesando/);
 
 assert.equal(browserErrors.length,0,`Errores de navegador: ${browserErrors.join(' | ')}`);
 dom.window.close();
-console.log('OK · v1.3.1 · descanso vs objetivo · Ubicar/Traer rodeo · persistencia Gantt · ficha contextual · ARIA sin tooltip nativo · fixture público');
+console.log('OK · v1.3.2 · descanso vs objetivo · Ubicar/Traer rodeo · persistencia Gantt · ficha contextual · ARIA sin tooltip nativo · fixture público');
 process.exit(0);

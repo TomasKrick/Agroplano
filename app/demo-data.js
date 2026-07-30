@@ -160,10 +160,12 @@ window.AGROPLANO_DEMO = (() => {
             startDate:cursor,endDateExclusive:open?null:theoreticalEnd,status:'real',source:'demo_synthetic',
             notes:'Ocupación real ficticia generada para la demostración.',dataOrigin:DATA_ORIGIN
           });
-          const plannedStart=addDays(cursor,(index+herdIndex)%4===0?-1:0);
+          // Keep a small, visible plan-vs-actual variation without creating
+          // impossible overlaps for the same herd in the synthetic fixture.
+          const plannedStart=addDays(cursor,(index+herdIndex)%4===0?1:0);
           rows.push({
             id:`plan-${herd.id}-${index}`,lotId,herdId:herd.id,herdCode:herd.code,category:herd.category,heads:herd.heads,
-            startDate:plannedStart,endDateExclusive:addDays(plannedStart,duration+((index+herdIndex)%5===0?1:0)),status:'planificado',source:'demo_synthetic',
+            startDate:plannedStart,endDateExclusive:theoreticalEnd,status:'planificado',source:'demo_synthetic',
             notes:'Plan ficticio usado para comparar planificación y ejecución.',dataOrigin:DATA_ORIGIN
           });
         }else{

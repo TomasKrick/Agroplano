@@ -59,7 +59,7 @@ const chooseLanguage=async language=>{
   select.dispatchEvent(new Event('change',{bubbles:true}));
   await wait(40);
 };
-const spanishUiFragment=/[¿¡]|\b(?:lotes?|rodeos?|hacienda|cabezas?|cultivos?|ocupaci[oó]n|ocupad[oa]s?|descansos?|d[ií]as?|desde|hasta|plazo|fecha|entradas?|salidas?|venta|mortandad|movimientos?|categor[ií]as?|estado|eventos?|historial|mapa|todos|todas|sin|para|por|con|del|una?|incluye|mayor|faltan?|primero|s[oó]lo|cada|dentro|cu[aá]l|otros?|otras?|viene[ns]?|uso|cargad[oa]s?|datos|filtros|condici[oó]n|agua|forraje|pasto|abiert[oa]s?|objetivo|alcanzar(?:on|[aá]n)?|m[aá]s|menos|muestra|tiene[ns]?|mismo|misma|varios?|puede[ns]?|tareas?|trabajo|registro|tabla|filas?|opcional|disponibilidad|comparaci[oó]n|registrad[oa]s?|planificad[oa]s?|realizad[oa]s?|anulad[oa]s?|pendientes?|revisar|cargar|editar|mostrar|filtrar|buscar|anterior|siguiente|superficie|responsable|calidad|problemas?|agr[ií]col[ao]s?|ganader[oa]s?|siembra|labor|ubicaci[oó]n|recorrido|per[ií]odos?|an[aá]lisis|gesti[oó]n|operativ[oa]s?|galp[oó]n|configurad[oa]s?|verificar|observaci[oó]n|duraci[oó]n|curso|plano|planilla|eleg[ií]|demostraci[oó]n|fictici[oa]s?|simult[aá]neos?|confirmad[oa]s?|pasad[oa]s?|marcar|asignar|m[ií]nimo|quitar|acceso|lleva|ficha|remanente|guardando|sincronizaci[oó]n|antecesor|asociad[oa]|sombra|monte|terneras|novillos|colza|avena|moha|anual|combinaciones|cobertura|coincidencia|evaluad[oa]s?|libre)\b|\bant\./iu;
+const spanishUiFragment=/[¿¡]|\b(?:lotes?|rodeos?|hacienda|cabezas?|cultivos?|ocupaci[oó]n|ocupad[oa]s?|descansos?|d[ií]as?|desde|hasta|plazo|fecha|entradas?|salidas?|venta|mortandad|movimientos?|categor[ií]as?|estado|eventos?|historial|mapa|todos|todas|sin|para|por|con|del|una?|incluye|mayor|faltan?|primero|s[oó]lo|cada|dentro|cu[aá]l|otros?|otras?|viene[ns]?|uso|cargad[oa]s?|datos|filtros|condici[oó]n|agua|forraje|pasto|abiert[oa]s?|objetivo|alcanzar(?:on|[aá]n)?|m[aá]s|menos|muestra|tiene[ns]?|mismo|misma|varios?|puede[ns]?|tareas?|trabajo|registro|tabla|filas?|opcional|disponibilidad|comparaci[oó]n|registrad[oa]s?|planificad[oa]s?|realizad[oa]s?|anulad[oa]s?|pendientes?|reales?|revisar|cargar|editar|mostrar|filtrar|buscar|anterior|siguiente|superficie|responsable|calidad|problemas?|agr[ií]col[ao]s?|ganader[oa]s?|siembra|labor|ubicaci[oó]n|recorrido|per[ií]odos?|an[aá]lisis|gesti[oó]n|operativ[oa]s?|galp[oó]n|configurad[oa]s?|verificar|observaci[oó]n|duraci[oó]n|curso|plano|planilla|eleg[ií]|demostraci[oó]n|fictici[oa]s?|simult[aá]neos?|confirmad[oa]s?|pasad[oa]s?|marcar|asignar|m[ií]nimo|quitar|acceso|lleva|ficha|remanente|guardando|sincronizaci[oó]n|antecesor|asociad[oa]|sombra|monte|terneras|novillos|colza|avena|moha|anual|combinaciones|cobertura|coincidencia|evaluad[oa]s?|libre|equipo|sanidad|administraci[oó]n)\b|\bant\./iu;
 const englishResidues=root=>{
   const values=[];
   const record=(kind,value)=>{
@@ -103,6 +103,16 @@ assert.equal(document.querySelector('.mapImg')?.getAttribute('src'),'assets/plan
 assert.equal(document.querySelector('.mapImg')?.getAttribute('alt'),'Synthetic farm map for demonstration');
 assert.match(document.querySelector('#syncStatus')?.getAttribute('aria-label')||'',/^Sync status:/);
 assert.match(document.querySelector('#activeWorkspaceMeta')?.textContent||'',/SYNTHETIC DATA/);
+assert.deepEqual(
+  [...document.querySelectorAll('#respList option')].map(option=>({value:option.value,label:option.textContent.trim()})),
+  [
+    {value:'Equipo Ganadería',label:'Livestock team'},
+    {value:'Equipo Agricultura',label:'Crop team'},
+    {value:'Sanidad',label:'Animal health'},
+    {value:'Administración',label:'Administration'}
+  ],
+  'Owner suggestions must be localized without changing their stored values'
+);
 assert.equal(w.AgroPlanoI18n.formatDate('2026-07-14'),'07/14/2026');
 assert.equal(w.AgroPlanoI18n.t('⚠ Respaldo: hace 7 días'),'⚠ Backup: 7 days ago');
 assertEnglishView('#viewMap');
@@ -125,10 +135,27 @@ for(const [selector,label] of englishViews){
   await wait(25);
   assert(document.querySelector('#main')?.textContent.includes(label),`${selector} did not render its English heading: ${label}`);
   if(selector==='#viewHacienda')assert.equal(document.querySelector('.dateInput')?.getAttribute('placeholder'),'mm/dd/yyyy');
+  if(selector==='#viewPastoreo'){
+    assert.match(document.querySelector('.plannerVisualHead .plannerRowsBadge')?.textContent.replace(/\s+/g,' ').trim()||'',/^Showing \d+ of \d+ lots/);
+    assert([...document.querySelectorAll('.dayHead small')].every(day=>/^[SMTWF]$/.test(day.textContent.trim())),'English Gantt must use English weekday initials');
+    assert([...document.querySelectorAll('.eventCode')].every(code=>!/^(?:SER|PAR|YER|TAC|VTA)$/.test(code.textContent.trim())),'English Gantt must not expose Spanish event codes');
+    assert([...document.querySelectorAll('#gpFilterHerd option:not([value="all"])')].every(option=>!option.textContent.includes(' · ')),'Synthetic herd filters must not duplicate translated names');
+  }
+  if(selector==='#viewDashboard'){
+    assert.equal(document.querySelector('.dashboardDetailFold .dashPanel:nth-of-type(5) h3')?.textContent.trim(),'Plan vs. recorded activity');
+    assert([...document.querySelectorAll('#dashHerd option:not([value="all"])')].every(option=>!option.textContent.includes(' · ')),'Dashboard herd filters must not duplicate translated names');
+    assert.match(document.querySelector('.occupancyHeatmap th[title]')?.getAttribute('title')||'',/\bto\b/);
+  }
   assertEnglishView(selector);
 }
 
 click('#viewAgenda');
+await wait(25);
+click('[data-event-mode="analysis"]');
+await wait(25);
+assert.match(document.querySelector('.eventAnalysisNote')?.textContent.replace(/\s+/g,' ').trim()||'',/^How to interpret this: Compliance includes only tasks/);
+assertEnglishView('#viewAgenda analysis');
+click('[data-event-mode="pending"]');
 await wait(25);
 const eventModeButtons=[...document.querySelectorAll('[data-event-mode]')];
 assert(eventModeButtons.length===3&&eventModeButtons.every(button=>button.hasAttribute('aria-pressed')),'Event modes must expose their selected state');

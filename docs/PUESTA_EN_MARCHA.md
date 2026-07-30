@@ -80,7 +80,7 @@ Ese primer usuario queda como Administrador.
 
 No hace falta presionar actualizar durante el funcionamiento normal. **Sincronizar ahora** sirve para reintentar después de una desconexión o verificar manualmente el estado.
 
-Para actualizar a `v1.3.1`, instale el nuevo MSI/EXE sobre la versión anterior en cada equipo y conserve los datos de la aplicación. Esta versión no requiere una migración SQL adicional.
+Para actualizar a `v1.3.2`, instale el nuevo MSI/EXE sobre la versión anterior en cada equipo y conserve los datos de la aplicación. Esta versión no requiere una migración SQL adicional.
 
 ## Antes de empezar una carga real
 

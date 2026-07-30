@@ -47,7 +47,7 @@ La instalación se realiza una vez por computadora. Cada persona debe usar su pr
 
 La actualización del instalador no es automática. Supabase sincroniza registros y catálogos, no reemplaza el código instalado.
 
-Para esta actualización, confirme que el encabezado muestre `v1.3.1`. No necesita ejecutar una migración SQL nueva.
+Para esta actualización, confirme que el encabezado muestre `v1.3.2`. No necesita ejecutar una migración SQL nueva.
 
 ## Orden recomendado para varios equipos
 

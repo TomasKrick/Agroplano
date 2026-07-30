@@ -1,6 +1,6 @@
 const CACHE_PREFIX = "agroplano-demo-";
-const SHELL_CACHE = `${CACHE_PREFIX}shell-v1.3.1`;
-const RUNTIME_CACHE = `${CACHE_PREFIX}runtime-v1.3.1`;
+const SHELL_CACHE = `${CACHE_PREFIX}shell-v1.3.2`;
+const RUNTIME_CACHE = `${CACHE_PREFIX}runtime-v1.3.2`;
 const SHELL = [
   "./", "./index.html", "./i18n.js", "./demo-data.js", "./config.js", "./cloud-sync.js",
   "./manifest.webmanifest", "./assets/icon.svg", "./assets/icon-192.png",

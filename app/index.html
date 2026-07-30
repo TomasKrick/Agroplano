@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  AgroPlano Gestión · v1.3.1
+  AgroPlano Gestión · v1.3.2
   Aplicación agropecuaria genérica con plano y datos de demostración 100% sintéticos.
   El motor operativo incluye mapa, hacienda, rodeos, pastoreo, indicadores, cultivos,
   historial, agenda, catálogos, respaldo y sincronización opcional.
@@ -14,7 +14,7 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./assets/icon-192.png" />
-  <title>AgroPlano Gestión · DEMO · v1.3.1</title>
+  <title>AgroPlano Gestión · DEMO · v1.3.2</title>
   <style>
     :root{
       --bg:#f3f0e8;
@@ -295,7 +295,7 @@
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="brand"><h1 id="activeWorkspaceName">AgroPlano Gestión Demo</h1><span id="activeWorkspaceMeta">v1.3.1 · DATOS FICTICIOS · NO USAR PARA OPERAR</span></div>
+    <div class="brand"><h1 id="activeWorkspaceName">AgroPlano Gestión Demo</h1><span id="activeWorkspaceMeta">v1.3.2 · DATOS FICTICIOS · NO USAR PARA OPERAR</span></div>
     <nav class="toolbar" aria-label="Secciones principales">
       <button id="viewMap" class="primary">Mapa</button>
       <button id="viewHacienda">Hacienda</button>
@@ -341,7 +341,7 @@
 <input type="file" id="jsonFile" accept="application/json,.json" class="hide">
 <input type="file" id="csvFile" accept="text/csv,.csv" class="hide">
 
-<datalist id="respList" data-i18n-skip><option>Equipo Ganadería</option><option>Equipo Agricultura</option><option>Sanidad</option><option>Administración</option></datalist>
+<datalist id="respList"><option value="Equipo Ganadería">Equipo Ganadería</option><option value="Equipo Agricultura">Equipo Agricultura</option><option value="Sanidad">Sanidad</option><option value="Administración">Administración</option></datalist>
 
 <div id="toast" class="toast"></div>
 <div id="catalogModal" class="catalogModal" hidden>
@@ -388,7 +388,7 @@ const DEFAULT_PLANNER_MONTHS = clamp(Number(DEMO_SETTINGS.plannerMonths||12),1,1
 const DEFAULT_DASHBOARD_START = parseDate(DEMO_SETTINGS.dashboardStart) || DEFAULT_CYCLE_START;
 const DEFAULT_DASHBOARD_END = parseDate(DEMO_SETTINGS.dashboardEnd) || DEFAULT_CYCLE_END;
 const STORAGE_KEY = 'agroplano_demo_state_v1';
-const APP_VERSION = '1.3.1';
+const APP_VERSION = '1.3.2';
 const SCHEMA_VERSION = 10;
 const SYNC_CHANNEL_NAME = 'agroplano_demo_sync_v1';
 const GEOMETRY_VERSION = 'agroplano-horizonte-sintetico-v1';
@@ -1659,6 +1659,13 @@ function catalogSelectOptions(type,selected='',blank='',filter=null){
   const opts=blank?[`<option value="">${esc(blank)}</option>`]:[];
   for(const item of items){const value=catalogValue(item,type),label=type==='herds'&&item.name&&normKey(item.name)!==normKey(value)?`${item.name} · ${value}`:item.name||value;opts.push(`<option value="${esc(value)}" ${normKey(value)===key?'selected':''}>${esc(label)}${item.active===false?' (histórico / inactivo)':''}</option>`);}
   return opts.join('');
+}
+function englishUi(){ return window.AgroPlanoI18n?.getLocale?.()==='en'; }
+function localizedHerdOptionLabel(herd){
+  const code=String(herd?.code||''),name=String(herd?.name||code);
+  const display=value=>window.AgroPlanoI18n?.t?.(value)||value;
+  const displayCode=display(code),displayName=display(name);
+  return normKey(displayCode)===normKey(displayName)?displayCode:`${displayCode} · ${displayName}`;
 }
 function cropCatalogItem(name){const key=normKey(name);return (state.cropCatalog||[]).find(item=>normKey(item.name)===key)||null;}
 function cropCatalogValuesForUse(use,selected=''){
@@ -3451,6 +3458,11 @@ function attachListViewEvents(){
 }
 const MONTH_NAMES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const WEEKDAY_MIN_ES = ['D','L','M','X','J','V','S'];
+const WEEKDAY_MIN_EN = ['S','M','T','W','T','F','S'];
+const EVENT_CODE_EN = Object.freeze({SER:'BRD',VAC:'VAC',PAR:'CLV',YER:'BRN',TAC:'CHK',VTA:'SAL'});
+function weekdayMin(date){ return (englishUi()?WEEKDAY_MIN_EN:WEEKDAY_MIN_ES)[date.getDay()]; }
+function localizedEventCode(code){ return englishUi()?(EVENT_CODE_EN[code]||code):code; }
+function localizedDateRange(start,end){ return `${fmtDateAR(start)} ${englishUi()?'to':'a'} ${fmtDateAR(end)}`; }
 function isProductiveLot(l){ return l.use!=='infra' && !isDeprecatedLotId(l.id); }
 function officialLots(){ return state.lots.filter(isProductiveLot).slice().sort((a,b)=>sortedLotNumber(a)-sortedLotNumber(b)); }
 function periodLabel(p){
@@ -3516,7 +3528,7 @@ function eventColumnVisual(items=[]){
   if(!items.length)return null;const styles=Array.from(new Map(items.map(x=>[x.style.id,x.style])).values());
   let gradient=`linear-gradient(${styles[0].color},${styles[0].color})`;if(styles.length>1){const step=100/styles.length,stops=[];styles.forEach((s,i)=>stops.push(`${s.color} ${(i*step).toFixed(2)}%`,`${s.color} ${((i+1)*step).toFixed(2)}%`));gradient=`linear-gradient(90deg,${stops.join(',')})`;}
   const counts=styles.map(s=>`${s.label}: ${items.filter(x=>x.style.id===s.id).length}`).join(' · '),lots=Array.from(new Set(items.map(x=>lotShortLabel(x.lot))));
-  return {gradient,primary:styles[0].color,text:styles[0].text,code:styles.length===1?styles[0].short:`${styles.length}E`,title:`${counts}${lots.length?' · '+lots.slice(0,8).join(', ')+(lots.length>8?'…':''):''}`,styles};
+  return {gradient,primary:styles[0].color,text:styles[0].text,code:styles.length===1?localizedEventCode(styles[0].short):`${styles.length}E`,title:`${counts}${lots.length?' · '+lots.slice(0,8).join(', ')+(lots.length>8?'…':''):''}`,styles};
 }
 function plannerDecisionMetrics(lots,periods,start,endExclusive){
   const lotIds=new Set(lots.map(l=>String(l.id))),todayEnd=addDays(today(),1),actualEnd=endExclusive<todayEnd?endExclusive:todayEnd,hasElapsed=start<actualEnd;
@@ -3589,11 +3601,11 @@ function renderPastoreoView(){
   const edit=(state._editingGrazingId&&active.find(p=>String(p.id)===String(state._editingGrazingId)))||null;
   const lotOpts=allLots.map(l=>`<option value="${esc(l.id)}" ${String(edit?.lotId||'')===String(l.id)?'selected':''}>${esc(l.number)} · ${esc(l.code||'sin código')} · ${esc(l.areaGroup||'sin grupo')} · ${esc(l.areaHa||'—')} ha</option>`).join('');
   const herdCodes=catalogSelectOptions('herds',edit?.herdCode||'','');
-  const herdFilterOpts=mergeHerdCatalog(state.herds||[],active).filter(h=>active.some(p=>normKey(p.herdCode)===normKey(h.code))).sort((a,b)=>String(a.code).localeCompare(String(b.code))).map(h=>`<option value="${esc(h.code)}" ${normKey(state.plannerFilter?.herd)===normKey(h.code)?'selected':''}>${esc(h.code)} · ${esc(h.name)}</option>`).join('');
+  const herdFilterOpts=mergeHerdCatalog(state.herds||[],active).filter(h=>active.some(p=>normKey(p.herdCode)===normKey(h.code))).sort((a,b)=>String(a.code).localeCompare(String(b.code))).map(h=>`<option value="${esc(h.code)}" ${normKey(state.plannerFilter?.herd)===normKey(h.code)?'selected':''}>${esc(localizedHerdOptionLabel(h))}</option>`).join('');
   const categoryFilterOpts=Array.from(new Set(active.map(p=>String(p.category||'').trim()||'Sin categoría'))).sort((a,b)=>a.localeCompare(b)).map(c=>`<option value="${esc(c)}" ${normKey(state.plannerFilter?.category||'all')===normKey(c)?'selected':''}>${esc(c)}</option>`).join('');
   const eventFilterOpts=PASTURE_EVENT_STYLES.map(def=>`<option value="${esc(def.id)}" ${eventFilter===def.id?'selected':''}>${esc(def.label)}</option>`).join('');
   const monthHead=monthGroups(dates).map(g=>`<th class="monthHead" colspan="${g.count}" aria-label="${esc(g.label)}">${esc(g.label)}</th>`).join('');
-  const dayHead=dates.map(d=>{const x=dateObj(d),weekend=[0,6].includes(x.getDay()),todayClass=d===today()?' todayCol':'',monthStart=d.endsWith('-01')?' monthStart':'',weekStart=x.getDay()===1?' weekStart':'',evVisual=eventVisualByDate.get(d),eventClass=evVisual?' eventDayHead':'',eventStyle=evVisual?` style="--event-gradient:${esc(evVisual.gradient)};--event-primary:${esc(evVisual.primary)};--event-text:${esc(evVisual.text)}"`:'',label=[fmtDateAR(d),evVisual?.title].filter(Boolean).join(' · ');return `<th class="dayHead${weekend?' weekend':''}${todayClass}${monthStart}${weekStart}${eventClass}" data-date="${d}" aria-label="${esc(label)}"${evVisual?' tabindex="0"':''}${eventStyle}><span class="dayLabel">${x.getDate()}</span><small>${WEEKDAY_MIN_ES[x.getDay()]}</small>${evVisual?`<i class="eventCode">${esc(evVisual.code)}</i>`:''}</th>`;}).join('');
+  const dayHead=dates.map(d=>{const x=dateObj(d),weekend=[0,6].includes(x.getDay()),todayClass=d===today()?' todayCol':'',monthStart=d.endsWith('-01')?' monthStart':'',weekStart=x.getDay()===1?' weekStart':'',evVisual=eventVisualByDate.get(d),eventClass=evVisual?' eventDayHead':'',eventStyle=evVisual?` style="--event-gradient:${esc(evVisual.gradient)};--event-primary:${esc(evVisual.primary)};--event-text:${esc(evVisual.text)}"`:'',label=[fmtDateAR(d),evVisual?.title].filter(Boolean).join(' · ');return `<th class="dayHead${weekend?' weekend':''}${todayClass}${monthStart}${weekStart}${eventClass}" data-date="${d}" aria-label="${esc(label)}"${evVisual?' tabindex="0"':''}${eventStyle}><span class="dayLabel">${x.getDate()}</span><small>${weekdayMin(x)}</small>${evVisual?`<i class="eventCode">${esc(evVisual.code)}</i>`:''}</th>`;}).join('');
   const rangeContainsToday=today()>=start&&today()<=endInclusive,rows=lots.map(l=>{
     const stat=statFor(l),stateText=plannerLotStateText(stat,rangeContainsToday),stateClass=plannerLotStateClass(stat,rangeContainsToday),identity=`Lote ${l.number} · ${l.areaGroup||l.code||'sin código'}`,identityTitle=`${identity}\nPlano: ${l.code||'—'}\nPlanilla: ${l.areaGroup||'—'}\nSuperficie: ${l.areaHa||'—'} ha\n${stateText}`;
     const periods=byLot.get(String(l.id))||[];
@@ -3811,7 +3823,7 @@ function dashboardHeatmap(periods,start,endExclusive,lots,filters=dashboardFilte
     const ps=p.startDate>start?p.startDate:start,pe0=periodEndExclusive(p,endExclusive),pe=pe0<endExclusive?pe0:endExclusive;if(!ps||!pe||ps>=pe)continue;
     for(const d of analyticsDates(ps,pe)){const idx=Math.min(buckets.length-1,Math.floor((daysBetween(start,d)||0)/bucketDays)),key=`${p.lotId}|${idx}`;if(!cells.has(key))cells.set(key,{dates:new Set(),categories:new Map()});const cell=cells.get(key);cell.dates.add(d);const cat=String(p.category||'').trim()||'Sin categoría';cell.categories.set(cat,(cell.categories.get(cat)||0)+1);}
   }
-  const head=buckets.map(b=>`<th title="${esc(fmtDateAR(b.start))} a ${esc(fmtDateAR(addDays(b.end,-1)))}">${esc(b.label)}</th>`).join(''),body=lots.filter(Boolean).slice().sort((a,b)=>sortedLotNumber(a)-sortedLotNumber(b)).map(l=>{
+  const head=buckets.map(b=>`<th title="${esc(localizedDateRange(b.start,addDays(b.end,-1)))}">${esc(b.label)}</th>`).join(''),body=lots.filter(Boolean).slice().sort((a,b)=>sortedLotNumber(a)-sortedLotNumber(b)).map(l=>{
     const row=buckets.map((b,i)=>{const cell=cells.get(`${l.id}|${i}`),occupied=cell?.dates.size||0,pct=Math.round(occupied/b.days*100),cats=cell?Array.from(cell.categories.entries()).sort((a,b)=>b[1]-a[1]):[],dominant=cats[0]?.[0]||'',color=filters.herd!=='all'?herdColor(filters.herd):colorForKey('cat:'+normKey(dominant||'sin categoria')),title=`Lote ${l.number} · ${b.label}: ${occupied}/${b.days} días ocupados${cats.length?' · '+cats.map(x=>x[0]).join(', '):' · descanso/sin registro'}`,style=occupied?`background:linear-gradient(90deg,${color} 0 ${pct}%,#f0ede6 ${pct}% 100%);color:${pct>=58?'#fff':'#2d332b'};text-shadow:${pct>=58?'0 1px 2px rgba(0,0,0,.45)':'none'}`:'background:#f3f0e9;color:#a29b8e';return `<td data-dashboard-lot="${esc(l.id)}" title="${esc(title)}" style="${esc(style)}">${occupied||'·'}</td>`;}).join('');
     return `<tr><td data-dashboard-lot="${esc(l.id)}" title="${esc(l.code||'')} · ${esc(l.areaHa||'—')} ha"><b>Lote ${esc(l.number)}</b> · ${esc(l.areaGroup||l.code||'')}</td>${row}</tr>`;
   }).join('');
@@ -3873,7 +3885,7 @@ function dashboardDataAlerts(m){
 function dashboardDecisionItems({stays,rests,m,events,alerts}){
   const rows=[],push=(color,icon,title,detail,action='pastoreo',lotId='',event='')=>rows.push({color,icon,title,detail,action,lotId,event});
   if(alerts.integrity?.count)push('#b9483e','!',`${alerts.integrity.count} inconsistencia${alerts.integrity.count===1?'':'s'} de datos`,`${alerts.integrity.errors} críticas · ${alerts.integrity.warnings} para completar. Revisar antes de tomar decisiones de inventario.`,'integrity',alerts.integrity.issues[0]?.lotId||'');
-  if(alerts.count)push('#b9483e','!',`${alerts.count} registro${alerts.count===1?'':'s'} requieren revisión`,`${alerts.missingHeads} sin cabezas · ${alerts.missingHerd} sin rodeo · ${alerts.missingCategory} sin categoría.`,'review');
+  if(alerts.count)push('#b9483e','!',`${alerts.count} registro${alerts.count===1?' requiere':'s requieren'} revisión`,`${alerts.missingHeads} sin cabezas · ${alerts.missingHerd} sin rodeo · ${alerts.missingCategory} sin categoría.`,'review');
   const waterLots=Array.from(new Map(stays.filter(x=>!hasWaterInfra(x.lot)||openProblemCount(x.lot)>0).map(x=>[String(x.lot.id),x.lot])).values());if(waterLots.length)push('#b9483e','≈',`${waterLots.length} lote${waterLots.length===1?'':'s'} ocupado${waterLots.length===1?'':'s'} sin agua confirmada o con problema abierto`,`Revisar ficha de recursos: ${waterLots.slice(0,5).map(x=>'Lote '+x.number).join(', ')}${waterLots.length>5?'…':''}.`,'hacienda',waterLots[0]?.id||'');
   if(events.pastOpen.length)push('#c07a28','◷',`${events.pastOpen.length} evento${events.pastOpen.length===1?'':'s'} con fecha pasada sin marcar`,`Esto no prueba que no se haya realizado: conviene confirmar o cerrar el registro.`,'event','',events.pastOpen[0]?.style.id||'all');
   if(stays.length){const x=stays[0];push('#c07a28','↗',`${x.rodeo} lleva ${x.days} días en Lote ${x.lot.number}`,`${x.category} · ${x.heads||'cabezas s/d'} · desde ${fmtDateAR(x.start)}. Revisar remanente, agua y condición; los días solos no prueban sobrepastoreo.`,'lot',x.lot.id);}
@@ -3899,7 +3911,7 @@ function renderDashboardView(){
   const fullLotDays=new Map(m.fullDaily.lotMetrics.map(x=>[String(x.lot?.id||''),x.days])),catRows=m.daily.categoryLot.filter(x=>x.lot).sort((a,b)=>b.days-a.days||sortedLotNumber(a.lot)-sortedLotNumber(b.lot)),maxCatDays=Math.max(1,...catRows.map(x=>x.days)),categoryLotRows=catRows.map(x=>{const share=Math.round(x.days/Math.max(1,fullLotDays.get(String(x.lotId))||x.days)*100),coverage=Math.round(x.knownHeadDays/Math.max(1,x.days)*100);return `<tr data-dashboard-lot="${esc(x.lotId)}"><td><b>Lote ${esc(x.lot.number)}</b><br><small>${esc(x.lot.code||'')} · ${esc(x.lot.areaHa||'—')} ha</small></td><td><span class="tableColorDot" style="--dot:${esc(colorForKey('cat:'+normKey(x.category)))}"></span><b>${esc(x.category)}</b></td><td><span class="heatCell" style="--heat:${Math.max(12,Math.round(x.days/maxCatDays*90))}%;--heat-color:#2f7d3a">${x.days} d</span></td><td class="num">${share}%</td><td class="num">${x.passes}</td><td class="num">${Math.round(x.animalDays)}</td><td><b>${coverage}%</b><div class="dataCoverage"><i style="width:${coverage}%"></i></div></td><td>${esc(fmtDateAR(x.lastDate))}</td></tr>`;}).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:22px">Sin datos por categoría para este filtro.</td></tr>';
   const maxStay=Math.max(1,...stays.map(x=>x.days)),stayRows=stays.slice(0,14).map((x,i)=>`<div class="currentStay" data-dashboard-lot="${esc(x.lot.id)}"><div class="currentStayMeta"><b>${i+1}. ${esc(x.rodeo)} · Lote ${esc(x.lot.number)}</b><small>${esc(x.category)} · ${x.heads||'s/d'} cab. · desde ${esc(fmtDateAR(x.start))}</small></div><div class="barTrack"><div class="barFill" style="--bar:${Math.round(x.days/maxStay*100)}%;--bar-color:${i===0?'#b9483e':'#c07a28'}"></div></div><div class="barValue">${x.days} d</div></div>`).join('')||'<div class="hint">No hay rodeos ocupando lotes actualmente para este filtro.</div>',restRows=rests.slice(0,12).map(x=>`<div class="restProgress" data-dashboard-lot="${esc(x.lot.id)}"><div><b>Lote ${esc(x.lot.number)} ${x.ready?'<span class="statusPill pronto">Objetivo calendario</span>':''}</b><small>libre desde ${esc(fmtDateAR(x.exit))}</small></div><div class="barTrack"><div class="barFill" style="--bar:${Math.min(100,x.pct)}%;--bar-color:${x.ready?'#2f7d3a':'#d5a13f'}"></div></div><div class="barValue">${x.days}/${x.target} d</div></div>`).join('')||'<div class="hint">No hay descansos con historial para este filtro.</div>';
   const herdAgg=new Map();for(const p of m.actual){const code=p.herdCode||'Sin rodeo';if(!herdAgg.has(code))herdAgg.set(code,{code,days:new Set(),animalDays:0,lots:new Set(),passes:0});const h=herdAgg.get(code),s=p.startDate>start?p.startDate:start,e0=periodEndExclusive(p,m.actualEnd),e=e0<m.actualEnd?e0:m.actualEnd;for(const d of analyticsDates(s,e)){const k=`${p.lotId}|${d}`;if(!h.days.has(k)){h.days.add(k);h.animalDays+=Number(p.heads||0);}}h.lots.add(String(p.lotId));h.passes++;}const herdRows=Array.from(herdAgg.values()).sort((a,b)=>b.days.size-a.days.size).map(h=>`<tr><td><span class="tableColorDot" style="--dot:${esc(herdColor(h.code))}"></span><b>${esc(h.code)}</b></td><td class="num">${h.days.size}</td><td class="num">${Math.round(h.animalDays)}</td><td class="num">${h.lots.size}</td><td class="num">${h.passes}</td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:22px">Sin rodeos reales en el período.</td></tr>';
-  const planTotal=m.alignment.fulfilled+m.alignment.missed+m.alignment.extra,seg=n=>planTotal?Math.round(n/planTotal*100):0,periodCatalog=activeGrazingPeriods(),categoryValues=Array.from(new Set(periodCatalog.map(p=>String(p.category||'').trim()||'Sin categoría'))).sort((a,b)=>a.localeCompare(b)),categoryOpts=categoryValues.map(c=>`<option value="${esc(c)}" ${normKey(filters.category)===normKey(c)?'selected':''}>${esc(c)}</option>`).join(''),herdValues=mergeHerdCatalog(state.herds||[],periodCatalog).filter(h=>periodCatalog.some(p=>normKey(p.herdCode)===normKey(h.code))).sort((a,b)=>String(a.code).localeCompare(String(b.code))),herdOpts=herdValues.map(h=>`<option value="${esc(h.code)}" ${normKey(filters.herd)===normKey(h.code)?'selected':''}>${esc(h.code)} · ${esc(h.name)}</option>`).join(''),lotOpts=officialLots().map(l=>`<option value="${esc(l.id)}" ${String(filters.lot)===String(l.id)?'selected':''}>${esc(l.number)} · ${esc(l.code||'')}</option>`).join('');
+  const planTotal=m.alignment.fulfilled+m.alignment.missed+m.alignment.extra,seg=n=>planTotal?Math.round(n/planTotal*100):0,periodCatalog=activeGrazingPeriods(),categoryValues=Array.from(new Set(periodCatalog.map(p=>String(p.category||'').trim()||'Sin categoría'))).sort((a,b)=>a.localeCompare(b)),categoryOpts=categoryValues.map(c=>`<option value="${esc(c)}" ${normKey(filters.category)===normKey(c)?'selected':''}>${esc(c)}</option>`).join(''),herdValues=mergeHerdCatalog(state.herds||[],periodCatalog).filter(h=>periodCatalog.some(p=>normKey(p.herdCode)===normKey(h.code))).sort((a,b)=>String(a.code).localeCompare(String(b.code))),herdOpts=herdValues.map(h=>`<option value="${esc(h.code)}" ${normKey(filters.herd)===normKey(h.code)?'selected':''}>${esc(localizedHerdOptionLabel(h))}</option>`).join(''),lotOpts=officialLots().map(l=>`<option value="${esc(l.id)}" ${String(filters.lot)===String(l.id)?'selected':''}>${esc(l.number)} · ${esc(l.code||'')}</option>`).join('');
   const filterText=[filters.lot!=='all'?`Lote ${getLot(filters.lot)?.number||filters.lot}`:'Todos los lotes',filters.herd!=='all'?filters.herd:'Todos los rodeos',filters.category!=='all'?filters.category:'Todas las categorías'].join(' · '),delta=(a,b,digits=0)=>!compare?'':`<span class="delta">${a>b?'↑':a<b?'↓':'='} ${digits?Math.abs(a-b).toFixed(digits):Math.round(Math.abs(a-b))} vs. período anterior</span>`,areaScope=filters.lot!=='all'?'del lote seleccionado':filters.category!=='all'||filters.herd!=='all'?'de lotes usados por el filtro':'de todos los lotes productivos';
   $('#main').innerHTML=`<section class="dashboardView"><div class="dashboardTitle"><div><h2>Tablero de control ganadero</h2><p>Ocupaciones actuales más largas, situación actual, prioridades, tendencias y análisis procesados a partir de los registros compartidos.</p></div><div class="dashboardTitleActions"><span class="badge">${fmtDateAR(start)} → ${fmtDateAR(endInclusive)}</span><button id="dashOpenPastoreo" class="ghost small">Abrir Gantt filtrado</button></div></div>
     <div class="dashboardTools analyticsFilters"><div class="field"><label>Desde</label><input id="dashStart" class="dateInput" value="${esc(dateInputValue(start))}"></div><div class="field"><label>Hasta</label><input id="dashEnd" class="dateInput" value="${esc(dateInputValue(endInclusive))}"></div><div class="field"><label>Lote</label><select id="dashLot"><option value="all">Todos</option>${lotOpts}</select></div><div class="field"><label>Rodeo</label><select id="dashHerd"><option value="all">Todos</option>${herdOpts}</select></div><div class="field"><label>Categoría</label><select id="dashCategory"><option value="all">Todas</option>${categoryOpts}</select></div><div class="field"><label>Comparar</label><select id="dashCompare"><option value="yes" ${compare?'selected':''}>Período anterior</option><option value="no" ${!compare?'selected':''}>Sin comparación</option></select></div><button id="dashApply" class="primary">Actualizar</button><div class="dashboardQuickRanges"><button class="ghost" data-dashboard-days="30">30 días</button><button class="ghost" data-dashboard-days="90">90 días</button><button class="ghost" data-dashboard-days="365">1 año</button><button id="dashCycle" class="ghost">Ciclo anual</button><button id="dashClear" class="ghost">Limpiar filtros</button></div></div>

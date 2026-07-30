@@ -4,6 +4,17 @@
 
 - Sin cambios pendientes.
 
+## 1.3.2 — 30/07/2026
+
+- Completa la localización de responsables sintéticos y del contador dividido
+  del Gantt detectados durante la revisión visual de la demo publicada.
+- Elimina 90 solapes artificiales del plan sintético, conserva un único caso
+  deliberado para demostrar validación y añade una regresión específica.
+- Localiza el análisis de Eventos, días y códigos del Gantt, rangos de fechas
+  y opciones de rodeo sin duplicar sus nombres.
+- Renueva la caché offline para que navegadores y celulares reciban el pulido
+  inmediatamente.
+
 ## 1.3.1 — 30/07/2026
 
 ### Pulido de la edición pública
