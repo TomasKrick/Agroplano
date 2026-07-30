@@ -1,6 +1,6 @@
 [package]
 name = "agroplano_demo"
-version = "1.3.2"
+version = "1.3.3"
 description = "Bilingual AgroPlano Management Demo with operational workflows and synthetic data"
 authors = ["Tomás Krick"]
 license = "MIT"

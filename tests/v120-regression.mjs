@@ -33,6 +33,11 @@ const dom=new JSDOM(html,{
   virtualConsole,
   beforeParse(window){
     window.localStorage.setItem('agroplano_demo_language_v1','es');
+    window.localStorage.setItem('agroplano_demo_state_v1',JSON.stringify({
+      appVersion:'1.3.2',
+      currentUser:'Fixture obsoleto',
+      grazingPeriods:[]
+    }));
     Object.defineProperty(window,'innerWidth',{configurable:true,value:1366});
     Object.defineProperty(window,'innerHeight',{configurable:true,value:768});
     Object.defineProperty(window,'devicePixelRatio',{configurable:true,value:1});
@@ -76,7 +81,8 @@ const click=selector=>{
 
 await wait(180);
 assert.equal(browserErrors.length,0,`Errores al iniciar: ${browserErrors.join(' | ')}`);
-assert.equal(value('APP_VERSION'),'1.3.2');
+assert.equal(value('APP_VERSION'),'1.3.3');
+assert.equal(value('state.currentUser'),'Administrador Demo','La versión nueva no debe reabrir el fixture local obsoleto');
 assert.equal(w.AGROPLANO_DEMO?.meta?.privacyClass,'public_demo');
 const infrastructure=json(`INFRASTRUCTURE.map(item=>({id:item.id,type:item.type,content:infraMarkerContent(item)}))`);
 assert.equal(infrastructure.filter(item=>item.type==='aguada').length,4);
@@ -190,5 +196,5 @@ assert.match(value('window.__doubleSubmitMessage'),/ya se está procesando/);
 
 assert.equal(browserErrors.length,0,`Errores de navegador: ${browserErrors.join(' | ')}`);
 dom.window.close();
-console.log('OK · v1.3.2 · descanso vs objetivo · Ubicar/Traer rodeo · persistencia Gantt · ficha contextual · ARIA sin tooltip nativo · fixture público');
+console.log('OK · v1.3.3 · descanso vs objetivo · Ubicar/Traer rodeo · persistencia Gantt · ficha contextual · ARIA sin tooltip nativo · fixture público');
 process.exit(0);

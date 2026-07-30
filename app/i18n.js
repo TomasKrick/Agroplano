@@ -21,10 +21,10 @@
   var EN = Object.freeze({
     "AgroPlano Gestión Demo": "AgroPlano Management Demo",
     "AgroPlano Gestión · DEMO": "AgroPlano Management · DEMO",
-    "AgroPlano Gestión · DEMO · v1.3.2": "AgroPlano Management · DEMO · v1.3.2",
+    "AgroPlano Gestión · DEMO · v1.3.3": "AgroPlano Management · DEMO · v1.3.3",
     "DATOS FICTICIOS": "SYNTHETIC DATA",
     "NO USAR PARA OPERAR": "NOT FOR PRODUCTION USE",
-    "v1.3.2 · DATOS FICTICIOS · NO USAR PARA OPERAR": "v1.3.2 · SYNTHETIC DATA · NOT FOR PRODUCTION USE",
+    "v1.3.3 · DATOS FICTICIOS · NO USAR PARA OPERAR": "v1.3.3 · SYNTHETIC DATA · NOT FOR PRODUCTION USE",
     "Secciones principales": "Main sections",
     "Mapa": "Map",
     "Hacienda": "Livestock",

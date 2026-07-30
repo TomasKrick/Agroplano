@@ -62,7 +62,7 @@ function includesAll(source,values,scope){
 
 // Identidad visible y aplicación integral.
 includesAll(html,[
-  'AgroPlano Gestión Demo','v1.3.2','DATOS FICTICIOS','NO USAR PARA OPERAR',
+  'AgroPlano Gestión Demo','v1.3.3','DATOS FICTICIOS','NO USAR PARA OPERAR',
   './i18n.js','./demo-data.js','./config.js','./cloud-sync.js','assets/plano-demo.svg','assets/plano-demo-en.svg',
   'id="languageSelect"','>English<','>Español<'
 ],'Aplicación');
@@ -174,18 +174,18 @@ assert(mainWindow?.width===1366&&mainWindow?.height===768,'La ventana Tauri debe
 assert(mainWindow?.minWidth<=900&&mainWindow?.minHeight<=560,'La ventana debe poder reducirse sin bloquear notebooks');
 
 // Identidad separada del instalable.
-assert(rootPackage.name==='agroplano-demo'&&rootPackage.version==='1.3.2','La identidad npm raíz debe ser agroplano-demo v1.3.2');
+assert(rootPackage.name==='agroplano-demo'&&rootPackage.version==='1.3.3','La identidad npm raíz debe ser agroplano-demo v1.3.3');
 assert(rootPackage.private===true,'El paquete debe estar protegido contra publicación npm accidental');
 assert(rootPackage.author==='Tomás Krick'&&rootPackage.license==='MIT','El paquete raíz debe declarar autor y licencia MIT');
-assert(desktopPackage.name==='agroplano-demo-desktop'&&desktopPackage.version==='1.3.2','La identidad npm de escritorio debe ser propia y v1.3.2');
+assert(desktopPackage.name==='agroplano-demo-desktop'&&desktopPackage.version==='1.3.3','La identidad npm de escritorio debe ser propia y v1.3.3');
 assert(desktopPackage.author==='Tomás Krick'&&desktopPackage.license==='MIT','El paquete de escritorio debe declarar autor y licencia MIT');
 assert(desktopPackage.scripts?.build==='tauri build','El build de escritorio debe compilar Tauri');
-assert(tauriConfig.productName==='AgroPlano Demo'&&tauriConfig.version==='1.3.2','El instalador debe tener marca y versión propias');
+assert(tauriConfig.productName==='AgroPlano Demo'&&tauriConfig.version==='1.3.3','El instalador debe tener marca y versión propias');
 assert(tauriConfig.identifier==='com.agroplano.demo','El identificador Tauri debe ser com.agroplano.demo');
 assert(mainWindow?.title?.includes('AgroPlano Demo')&&mainWindow.title.includes('SYNTHETIC DATA'),'La ventana debe identificar claramente la demo');
 const targets=tauriConfig.bundle?.targets||[];
 assert(tauriConfig.bundle?.active===true&&['nsis','msi'].every(target=>targets.includes(target)),'El build Windows debe producir NSIS y MSI');
-assert(/^name\s*=\s*"agroplano_demo"\s*$/m.test(cargo)&&/^version\s*=\s*"1\.3\.2"\s*$/m.test(cargo),'La identidad Rust debe ser agroplano_demo v1.3.2');
+assert(/^name\s*=\s*"agroplano_demo"\s*$/m.test(cargo)&&/^version\s*=\s*"1\.3\.3"\s*$/m.test(cargo),'La identidad Rust debe ser agroplano_demo v1.3.3');
 assert(/^authors\s*=\s*\["Tomás Krick"\]\s*$/m.test(cargo)&&/^license\s*=\s*"MIT"\s*$/m.test(cargo),'Cargo debe declarar autor y licencia MIT');
 assert(manifest.name?.includes('AgroPlano')&&manifest.name?.includes('Demo'),'El manifiesto PWA debe conservar la identidad genérica');
 
@@ -323,5 +323,6 @@ for(const path of publicPaths){
 assert(demo.lots.every(lot=>/^(?:AU|BR|CA|DE)-\d{2}$/.test(lot.code)),'Los códigos de lote deben pertenecer únicamente al esquema artificial de la demo');
 assert(!/window\.CAMPO_DEMO\b/.test(demoSource+html),'No debe quedar el alias temporal del prototipo anterior');
 assert(!/(?:STORAGE_KEY|SYNC_CHANNEL_NAME|DB_NAME)\s*=\s*['"](?!agroplano[_-]demo)/.test(html+cloudSource),'Persistencia y canales deben usar namespace propio');
+assert(html.includes("const STORAGE_KEY = 'agroplano_demo_state_v2'")&&html.includes("const SYNC_CHANNEL_NAME = 'agroplano_demo_sync_v2'"),'La demo corregida debe aislarse del fixture local obsoleto');
 
-console.log(`OK · AgroPlano Demo v1.3.2 · ${demo.lots.length} lotes · ${demo.herds.length} rodeos · app integral bilingüe, instalador y backend aislados · privacidad verificada`);
+console.log(`OK · AgroPlano Demo v1.3.3 · ${demo.lots.length} lotes · ${demo.herds.length} rodeos · app integral bilingüe, instalador y backend aislados · privacidad verificada`);

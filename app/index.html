@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  AgroPlano Gestión · v1.3.2
+  AgroPlano Gestión · v1.3.3
   Aplicación agropecuaria genérica con plano y datos de demostración 100% sintéticos.
   El motor operativo incluye mapa, hacienda, rodeos, pastoreo, indicadores, cultivos,
   historial, agenda, catálogos, respaldo y sincronización opcional.
@@ -14,7 +14,7 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./assets/icon-192.png" />
-  <title>AgroPlano Gestión · DEMO · v1.3.2</title>
+  <title>AgroPlano Gestión · DEMO · v1.3.3</title>
   <style>
     :root{
       --bg:#f3f0e8;
@@ -295,7 +295,7 @@
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="brand"><h1 id="activeWorkspaceName">AgroPlano Gestión Demo</h1><span id="activeWorkspaceMeta">v1.3.2 · DATOS FICTICIOS · NO USAR PARA OPERAR</span></div>
+    <div class="brand"><h1 id="activeWorkspaceName">AgroPlano Gestión Demo</h1><span id="activeWorkspaceMeta">v1.3.3 · DATOS FICTICIOS · NO USAR PARA OPERAR</span></div>
     <nav class="toolbar" aria-label="Secciones principales">
       <button id="viewMap" class="primary">Mapa</button>
       <button id="viewHacienda">Hacienda</button>
@@ -387,10 +387,10 @@ const DEFAULT_PLANNER_END = parseDate(DEMO_SETTINGS.plannerEnd) || DEFAULT_CYCLE
 const DEFAULT_PLANNER_MONTHS = clamp(Number(DEMO_SETTINGS.plannerMonths||12),1,12);
 const DEFAULT_DASHBOARD_START = parseDate(DEMO_SETTINGS.dashboardStart) || DEFAULT_CYCLE_START;
 const DEFAULT_DASHBOARD_END = parseDate(DEMO_SETTINGS.dashboardEnd) || DEFAULT_CYCLE_END;
-const STORAGE_KEY = 'agroplano_demo_state_v1';
-const APP_VERSION = '1.3.2';
+const STORAGE_KEY = 'agroplano_demo_state_v2';
+const APP_VERSION = '1.3.3';
 const SCHEMA_VERSION = 10;
-const SYNC_CHANNEL_NAME = 'agroplano_demo_sync_v1';
+const SYNC_CHANNEL_NAME = 'agroplano_demo_sync_v2';
 const GEOMETRY_VERSION = 'agroplano-horizonte-sintetico-v1';
 const LEGACY_STORAGE_KEYS = [];
 const DEPRECATED_LOT_IDS = new Set();

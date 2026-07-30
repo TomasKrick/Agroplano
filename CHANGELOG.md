@@ -4,6 +4,14 @@
 
 - Sin cambios pendientes.
 
+## 1.3.3 — 30/07/2026
+
+- Inicia un espacio local nuevo para la demo pública, de modo que quienes
+  visitaron versiones anteriores reciban el fixture corregido sin conservar
+  los solapes sintéticos obsoletos.
+- Mantiene la preferencia English/Español y deja intacto el estado anterior,
+  aislado bajo su clave histórica.
+
 ## 1.3.2 — 30/07/2026
 
 - Completa la localización de responsables sintéticos y del contador dividido
