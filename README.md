@@ -1,8 +1,8 @@
 # AgroPlano — Livestock Operations & Grazing Decision Support
 
-[![Tests](https://github.com/TomasKrick/agroplano/actions/workflows/verify.yml/badge.svg)](https://github.com/TomasKrick/agroplano/actions/workflows/verify.yml)
-[![Windows build](https://github.com/TomasKrick/agroplano/actions/workflows/build-windows.yml/badge.svg)](https://github.com/TomasKrick/agroplano/actions/workflows/build-windows.yml)
-[![Live demo](https://img.shields.io/badge/live_demo-open-2f7d48)](https://tomaskrick.github.io/agroplano/)
+[![Tests](https://github.com/TomasKrick/Agroplano/actions/workflows/verify.yml/badge.svg)](https://github.com/TomasKrick/Agroplano/actions/workflows/verify.yml)
+[![Windows build](https://github.com/TomasKrick/Agroplano/actions/workflows/build-windows.yml/badge.svg)](https://github.com/TomasKrick/Agroplano/actions/workflows/build-windows.yml)
+[![Live demo](https://img.shields.io/badge/live_demo-open-2f7d48)](https://tomaskrick.github.io/Agroplano/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **AgroPlano** is a bilingual English/Spanish, offline-first application for
@@ -21,7 +21,7 @@ SVG geometry.
 > production data, geometry, identifiers, credentials, backend configuration,
 > exports or private Git history are included.
 
-[**Launch the live demo**](https://tomaskrick.github.io/agroplano/)
+[**Launch the live demo**](https://tomaskrick.github.io/Agroplano/)
 · [English user guide](docs/USER_GUIDE.md)
 · [Guía en español](docs/GUIA_DE_USO.md)
 · [Privacy boundary](docs/PRIVACIDAD_Y_SEPARACION.md)
@@ -138,7 +138,7 @@ flowchart TD
 
 ## Run locally and verify
 
-The [live demo](https://tomaskrick.github.io/agroplano/) stores edits only in
+The [live demo](https://tomaskrick.github.io/Agroplano/) stores edits only in
 your browser. To run the same source locally, use Node.js 20.19 or later:
 
 ```bash

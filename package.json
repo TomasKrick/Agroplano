@@ -6,9 +6,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TomasKrick/agroplano.git"
+    "url": "https://github.com/TomasKrick/Agroplano.git"
   },
-  "homepage": "https://tomaskrick.github.io/agroplano/",
+  "homepage": "https://tomaskrick.github.io/Agroplano/",
   "description": "AgroPlano Management Demo: bilingual farm operations application with synthetic geometry and data",
   "scripts": {
     "serve": "node tests/dev-server.mjs",
