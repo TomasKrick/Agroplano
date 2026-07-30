@@ -77,6 +77,7 @@ const change=(selector,next)=>{
 await wait(180);
 assert.equal(browserErrors.length,0,`Errores al iniciar: ${browserErrors.join(' | ')}`);
 assert.equal(w.AGROPLANO_DEMO?.meta?.privacyClass,'public_demo','La regresión debe usar solamente el fixture public_demo');
+assert.equal(value('today()'),w.AGROPLANO_DEMO?.meta?.demoToday,'La demo pública debe usar su reloj sintético fijo y no la fecha del dispositivo');
 
 const lotA='demo-lot-01',lotB='demo-lot-02',lotC='demo-lot-03';
 function reset(){
@@ -197,6 +198,31 @@ assert.throws(()=>value(`recordInventoryReduction({action:'venta',originId:${JSO
 assert.equal(inventorySnapshot(),before,'Una fecha inválida modificó inventario, eventos o ledger');
 assert.throws(()=>value(`recordInventoryReduction({action:'mortandad',originId:${JSON.stringify(lotA)},periodId:${JSON.stringify(validBase.toPeriodId)},heads:15,date:addDays(today(),-2)})`),/tiene 14/i);
 assert.equal(inventorySnapshot(),before,'Un sobregiro dejó datos parciales');
+
+value(`state.view='cultivos';render()`);
+await wait(30);
+change('#sheetCropLot',lotA);
+change('#sheetCropCurrent','Soja');
+document.querySelector('#sheetCropDate').value='99/99/2026';
+before=inventorySnapshot();
+click('#sheetCropSave');
+await wait(30);
+assert.match(document.querySelector('#toast')?.textContent||'',/Fecha inválida/i,'La vista Cultivos no informa una fecha inválida');
+assert.equal(inventorySnapshot(),before,'Cultivos modificó datos después de una fecha inválida');
+
+value(`state.view='hacienda';render()`);
+await wait(30);
+change('#sheetMovLot',lotA);
+change('#sheetMovCat','Vacas');
+change('#sheetMovRodeo','Rodeo Validación QA');
+document.querySelector('#sheetMovHeads').value='2';
+document.querySelector('#sheetMovDate').value='99/99/2026';
+before=inventorySnapshot();
+click('#sheetMovSave');
+await wait(30);
+assert.match(document.querySelector('#sheetMovPreview')?.textContent||'',/Fecha inválida/i,'Hacienda no informa una fecha inválida');
+assert.equal(inventorySnapshot(),before,'Hacienda modificó datos después de una fecha inválida');
+
 before=inventorySnapshot();
 assert.throws(()=>value(`(()=>{const original=recordGrazingStart;recordGrazingStart=(lot,args)=>{if(String(lot.id)===${JSON.stringify(lotB)})throw new Error('fallo inducido QA');return original(lot,args)};try{return recordCattleMovement({action:'mover',originId:${JSON.stringify(lotA)},destinationId:${JSON.stringify(lotB)},periodId:${JSON.stringify(validBase.toPeriodId)},date:addDays(today(),-2)})}finally{recordGrazingStart=original}})()`),/fallo inducido QA/);
 assert.equal(inventorySnapshot(),before,'Un movimiento fallido dejó cambios en origen, destino, períodos o ledger');

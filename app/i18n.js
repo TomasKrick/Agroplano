@@ -16,15 +16,15 @@
   var translatedText = new WeakMap();
   var originalAttributes = new WeakMap();
   var translatedAttributes = new WeakMap();
-  var observedAttributes = ["aria-label", "placeholder", "title"];
+  var observedAttributes = ["aria-label", "placeholder", "title", "alt"];
 
   var EN = Object.freeze({
     "AgroPlano Gestión Demo": "AgroPlano Management Demo",
     "AgroPlano Gestión · DEMO": "AgroPlano Management · DEMO",
-    "AgroPlano Gestión · DEMO · v1.3.0": "AgroPlano Management · DEMO · v1.3.0",
+    "AgroPlano Gestión · DEMO · v1.3.1": "AgroPlano Management · DEMO · v1.3.1",
     "DATOS FICTICIOS": "SYNTHETIC DATA",
     "NO USAR PARA OPERAR": "NOT FOR PRODUCTION USE",
-    "v1.3.0 · DATOS FICTICIOS · NO USAR PARA OPERAR": "v1.3.0 · SYNTHETIC DATA · NOT FOR PRODUCTION USE",
+    "v1.3.1 · DATOS FICTICIOS · NO USAR PARA OPERAR": "v1.3.1 · SYNTHETIC DATA · NOT FOR PRODUCTION USE",
     "Secciones principales": "Main sections",
     "Mapa": "Map",
     "Hacienda": "Livestock",
@@ -53,6 +53,7 @@
     "Fondo original": "Original background",
     "Reset datos": "Reset data",
     "Buscar lote, código, cultivo, categoría, nota…": "Search lot, code, crop, category, note…",
+    "Buscar lotes y registros": "Search lots and records",
     "Zoom mapa": "Map zoom",
     "Alejar el mapa": "Zoom map out",
     "Zoom del mapa": "Map zoom",
@@ -64,6 +65,7 @@
     "Usuario local": "Local user",
     "Usuario y permisos": "User and permissions",
     "guardado en este equipo": "saved on this device",
+    "guardando…": "saving…",
     "Preparando…": "Preparing…",
     "Abrir estado de datos compartidos": "Open shared-data status",
     "Exportar respaldo JSON ahora": "Export a JSON backup now",
@@ -168,12 +170,21 @@
     "Superficie": "Area",
     "Recursos": "Resources",
     "Acciones": "Actions",
+    "Quitar": "Remove",
+    "Quitar filtro": "Remove filter",
+    "Uso ant.": "Previous use",
+    "Acceso": "Access",
+    "Sombra": "Shade",
+    "Rodeo asociado": "Associated herd",
+    "dd/mm/aaaa": "mm/dd/yyyy",
     "Tipo": "Type",
     "Responsable": "Owner",
     "Registró": "Recorded by",
     "Planificado": "Planned",
     "Realizado": "Completed",
     "Realizada": "Completed",
+    "Registrar venta": "Record sale",
+    "Modo de eventos": "Event view",
     "Anulado": "Reversed",
     "Pendientes": "Pending",
     "Análisis": "Analysis",
@@ -189,6 +200,13 @@
     "para organizar": "for planning",
     "Realizados": "Completed",
     "Cumplimiento verificable": "Verifiable completion",
+    "Cobertura cab.": "Headcount coverage",
+    "Coincidencia": "Match",
+    "Real sin plan": "Actual without plan",
+    "combinaciones": "combinations",
+    "cabezas s/d": "headcount unavailable",
+    "Revisar remanente, agua y condición; los días solos no prueban sobrepastoreo.": "Check residual forage, water, and condition; days alone do not prove overgrazing.",
+    "La ausencia de registro no demuestra que no ocurrió: abrir el Gantt y conciliar plan versus ejecución.": "A missing record does not prove the work did not occur: open the Gantt and reconcile the plan with actual execution.",
 
     "Vista operativa por categoría, rodeo, cabezas, entrada, salida y descanso.": "Operational view by category, herd, headcount, entry, exit, and rest.",
     "Cabezas totales": "Total heads",
@@ -458,6 +476,7 @@
     "Revisar cobertura": "Review cover",
     "Monitorear lote": "Monitor lot",
     "Gantt": "Gantt",
+    "Marcar realizada": "Mark completed",
 
     "Enero": "January",
     "Febrero": "February",
@@ -517,6 +536,9 @@
     "⚠ Sin respaldo · exportar JSON": "⚠ No backup · export JSON",
 
     "Status de sincronización: Solo en este equipo": "Sync status: On this device only",
+    "Estado de sincronización: Solo en este equipo": "Sync status: On this device only",
+    "Estado de sincronización": "Sync status",
+    "Plano agropecuario ficticio de demostración": "Synthetic farm map for demonstration",
     "Configurá la nube para compartir entre computadoras.": "Configure cloud sync to share across devices.",
     "Plano interactivo. Arrastrá para mover; usá más, menos o Ajustar para cambiar el zoom. Con teclado usá más, menos, cero y flechas.": "Interactive map. Drag to pan; use plus, minus, or Fit to change zoom. With a keyboard, use plus, minus, zero, and the arrow keys.",
     "Manga y corrales": "Handling yard and corrals",
@@ -603,6 +625,26 @@
   });
 
   var PATTERNS_EN = [
+    [/^Estado de sincronización: (.+)$/u, "Sync status: $1"],
+    [/^Status de sincronización: (.+)$/u, "Sync status: $1"],
+    [/^Registrar venta: (.+)$/u, "Record sale: $1"],
+    [/^Marcar realizada: (.+)$/u, "Mark completed: $1"],
+    [/^Ver en mapa: (.+)$/u, "View on map: $1"],
+    [/^Ver en Gantt: (.+)$/u, "View in Gantt: $1"],
+    [/^Mostrando (\d+) de (\d+) lotes(.*)$/u, "Showing $1 of $2 lots$3"],
+    [/^Uso ant\.: (.+)$/u, "Previous use: $1"],
+    [/^Acceso: (.+)$/u, "Access: $1"],
+    [/^Sombra: (.+)$/u, "Shade: $1"],
+    [/^Rodeo asociado: (.+)$/u, "Associated herd: $1"],
+    [/^libre desde (.+)$/u, "free since $1"],
+    [/^Revisar ficha de recursos: (.+)$/u, "Review the resources record for $1"],
+    [/^(.+?) lleva (\d+) días en Lote (.+)$/u, "$1 has occupied Lot $3 for $2 days"],
+    [/^(\d+)% de días con todas las cabezas conocidas$/u, "$1% of days with complete headcount data"],
+    [/^(\d+) ocupaciones sin dato$/u, "$1 occupancies without headcount data"],
+    [/^(\d+) combinaciones$/u, "$1 combinations"],
+    [/^(\d+) días planificados futuros todavía no evaluados\.$/u, "$1 future planned days have not been evaluated yet."],
+    [/^(\d+) días planificados sin coincidencia real registrada$/u, "$1 planned days without a matching actual record"],
+    [/^(.+?) · (.+?) · desde (.+)\. Revisar remanente, agua y condición; los días solos no prueban sobrepastoreo\.$/u, "$1 · $2 · since $3. Check residual forage, water, and condition; days alone do not prove overgrazing."],
     [/^Lote (\d+)$/u, "Lot $1"],
     [/^Lote (\d+)(\s*·.*)$/u, "Lot $1$2"],
     [/^Lote ([A-Za-z0-9-]+)$/u, "Lot $1"],
@@ -616,8 +658,10 @@
     [/^Último: (.+)$/u, "Last: $1"],
     [/^Siembra: (.+)$/u, "Planted: $1"],
     [/^Siembra (.+)$/u, "Planted $1"],
-    [/^Ant\\. (.+)$/u, "Prev. $1"],
-    [/^Sig\\. (.+)$/u, "Next $1"],
+    [/^Ant\. (.+)$/u, "Prev. $1"],
+    [/^ant\. (.+)$/u, "prev. $1"],
+    [/\bant\. /gu, "prev. "],
+    [/^Sig\. (.+)$/u, "Next $1"],
     [/^Rodeo: (.+)$/u, "Herd: $1"],
     [/^Uso: (.+)$/u, "Use: $1"],
     [/^Cultivo: (.+)$/u, "Crop: $1"],
@@ -627,6 +671,7 @@
     [/^⚠ Respaldo: hace (\d+) días$/u, "⚠ Backup: $1 days ago"],
     [/^Próximo(?:s)? (\d+) días$/u, "Next $1 days"],
     [/^(\d+) d ocupación$/u, "$1 d occupied"],
+    [/(\d+) d ocupado/gu, "$1 d occupied"],
     [/^(\d+) d descanso$/u, "$1 d rest"],
     [/(\d+) d ocupados/gu, "$1 occupied days"],
     [/^(\d+) cab\.$/u, "$1 heads"],
@@ -822,6 +867,8 @@
     ["Vacas vacías", "Open cows"],
     ["Recría liviana", "Light backgrounding"],
     ["Recría pesada", "Heavy backgrounding"],
+    ["Terneras", "Female calves"],
+    ["Novillos", "Steers"],
     ["Novillitos", "Steers"],
     ["Terneros", "Calves"],
     ["Toros", "Bulls"],
@@ -834,7 +881,11 @@
     ["Regeneración natural", "Natural regeneration"],
     ["Regeneración espontánea", "Natural regeneration"],
     ["Campo natural", "Native grassland"],
+    ["Ryegrass anual", "Annual ryegrass"],
     ["Avena forrajera", "Forage oats"],
+    ["Avena", "Oats"],
+    ["Colza", "Canola"],
+    ["Moha", "Foxtail millet"],
     ["Sorgo forrajero", "Forage sorghum"],
     ["Sorgo granífero", "Grain sorghum"],
     ["Maíz para silo", "Silage maize"],
@@ -846,6 +897,7 @@
     ["Cebada", "Barley"],
     ["Barbecho", "Fallow"],
     ["Raigrás", "Ryegrass"],
+    ["Monte", "Tree cover"],
     ["Cañada", "Creek"],
     ["Brújula", "Compass"],
 
@@ -1031,8 +1083,8 @@
     ["Hasta", "Through"],
     ["desde", "from"],
     ["Desde", "From"],
-    ["actual", "current"],
-    ["Actual", "Current"],
+    ["actual", "actual"],
+    ["Actual", "Actual"],
     ["ahora", "now"],
     ["Ahora", "Now"],
     ["plazo", "range"],
@@ -1225,7 +1277,7 @@
     if (!root) return [];
     var elements = [];
     if (root.nodeType === 1) elements.push(root);
-    if (root.querySelectorAll) elements = elements.concat(Array.prototype.slice.call(root.querySelectorAll("[aria-label],[placeholder],[title]")));
+    if (root.querySelectorAll) elements = elements.concat(Array.prototype.slice.call(root.querySelectorAll("[aria-label],[placeholder],[title],[alt]")));
     return elements;
   }
 

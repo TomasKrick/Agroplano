@@ -4,6 +4,23 @@
 
 - Sin cambios pendientes.
 
+## 1.3.1 — 30/07/2026
+
+### Pulido de la edición pública
+
+- Completa el inglés de textos dinámicos, catálogos, abreviaturas del mapa,
+  ayudas y atributos de accesibilidad en las diez vistas.
+- Corrige el contraste de las acciones principales de Eventos y agrega
+  nombres contextuales para lectores de pantalla.
+- Asocia etiquetas con sus controles, identifica columnas de acciones y
+  permite ordenar tablas mediante teclado.
+- Fija el reloj de la demo al escenario sintético para que KPIs, vencimientos
+  y capturas sigan siendo reproducibles.
+- Captura fechas inválidas desde los formularios sin errores no controlados ni
+  cambios parciales.
+- Amplía la regresión bilingüe para detectar texto mixto, atributos `alt`,
+  etiquetas incompletas y pérdida de contraste.
+
 ## 1.3.0 — 29/07/2026
 
 ### Interfaz internacional

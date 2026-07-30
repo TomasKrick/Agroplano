@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  AgroPlano Gestión · v1.3.0
+  AgroPlano Gestión · v1.3.1
   Aplicación agropecuaria genérica con plano y datos de demostración 100% sintéticos.
   El motor operativo incluye mapa, hacienda, rodeos, pastoreo, indicadores, cultivos,
   historial, agenda, catálogos, respaldo y sincronización opcional.
@@ -14,7 +14,7 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./assets/icon-192.png" />
-  <title>AgroPlano Gestión · DEMO · v1.3.0</title>
+  <title>AgroPlano Gestión · DEMO · v1.3.1</title>
   <style>
     :root{
       --bg:#f3f0e8;
@@ -63,7 +63,7 @@
     .topbar{background:var(--panel);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
     .brand{display:flex;gap:12px;align-items:baseline;min-width:260px}.brand h1{font-family:var(--serif);font-weight:700;font-size:25px;line-height:1;margin:0}.brand span{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:700}.toolbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.divider{width:1px;height:26px;background:var(--line);margin:0 3px}.subbar{background:var(--panel2);border-bottom:1px solid var(--line2);padding:10px 16px;display:grid;grid-template-columns:minmax(220px, 1fr) auto;gap:10px;align-items:center}.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.search{max-width:340px}.select-mini{width:170px}.zoomCtl{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.zoomCtl input{width:150px;padding:0}.saveStatus{font-size:12px;color:var(--muted);font-family:var(--mono)}
     .main{min-width:0;min-height:0;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) 360px}.main.full{grid-template-columns:1fr}.mapPane{min-width:0;min-height:0;overflow:hidden;display:grid;grid-template-rows:auto auto auto minmax(0,1fr);background:var(--bg);position:relative}.stats{display:flex;gap:8px;align-items:stretch;padding:8px 12px;overflow:auto;border-bottom:1px solid var(--line2);background:rgba(255,255,255,.46)}.stat{min-width:92px;background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:7px 9px;box-shadow:0 2px 8px rgba(0,0,0,.04)}.stat b{display:block;font-family:var(--serif);font-size:22px;line-height:1;color:var(--text)}.stat span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:700;margin-top:4px}.stat.ready b{color:var(--ready)}.stat.occupied b{color:var(--occupied)}.stat.resting b{color:#94640f}.stat.event b{color:var(--blue)}.legend{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-left:auto;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700}.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.25);vertical-align:-1px;margin-right:4px}.modeBanner{display:none;padding:9px 14px;background:#fff7d9;border-bottom:1px solid #edd690;color:#5f420e;font-size:12px;font-weight:700;text-align:center}.modeBanner.visible{display:block}.mapViewport{width:100%;height:100%;min-width:0;min-height:0;overflow:auto;padding:8px;background:linear-gradient(0deg, rgba(36,75,42,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(36,75,42,.03) 1px, transparent 1px), var(--bg);background-size:44px 44px;position:relative;scroll-behavior:auto;overscroll-behavior:contain;scrollbar-gutter:stable both-edges;touch-action:none;cursor:grab}.mapViewport:focus-visible{outline:3px solid rgba(47,125,58,.38);outline-offset:-3px}.mapViewport.panning{cursor:grabbing;user-select:none}.mapViewport.panning .lotPoly,.mapViewport.panning .marker,.mapViewport.panning .mapInfraMarker{cursor:grabbing!important}.mapCanvas{position:relative;flex:none;max-width:none;margin:0 auto;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);transform-origin:top left}.mapCanvas.adding{cursor:crosshair}.mapCanvas.polygon{cursor:crosshair}.mapImg{display:block;width:100%;height:auto;user-select:none;pointer-events:none}.svgOverlay{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}.lotPoly{pointer-events:auto;cursor:pointer;stroke-width:.22;stroke:rgba(29,32,25,.72);fill-opacity:.36;mix-blend-mode:multiply;transition:fill-opacity .12s, stroke-width .12s, filter .12s}.lotPoly:hover{fill-opacity:.52;stroke-width:.42;filter:drop-shadow(0 2px 4px rgba(0,0,0,.22))}.lotPoly.selectedPoly{fill-opacity:.58;stroke:#111;stroke-width:.55;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}.draftPoly{stroke:var(--accent);stroke-width:.35;fill:rgba(47,125,58,.08);stroke-dasharray:1.2 1.2}.marker{position:absolute;z-index:8;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid var(--gray);color:var(--text);font-family:var(--mono);font-size:12px;font-weight:800;box-shadow:0 3px 12px rgba(0,0,0,.18);cursor:pointer;transition:transform .12s, box-shadow .12s, outline .12s}.marker:hover{transform:translate(-50%,-50%) scale(1.16);box-shadow:0 7px 18px rgba(0,0,0,.22)}.marker.selected{outline:4px solid rgba(36,75,42,.35);outline-offset:3px;z-index:12}.moveMode .marker{cursor:grab}.moveMode .marker:active{cursor:grabbing}.marker.ocupado{background:var(--occupied);border-color:#7e1e17;color:#fff}.marker.pronto{background:var(--ready);border-color:#195d22;color:#fff}.marker.descansando{background:var(--resting);border-color:#8a5c0a;color:#1b160d}.marker.cultivo{background:var(--crop);border-color:#815118;color:#fff}.marker.descanso{background:var(--blue);border-color:#253b4b;color:#fff}.marker.infra{background:#8d938c;border-color:#555b54;color:#fff}.marker.sin_manejo{background:#fff;border-color:#858d82;color:#535d50}.eventRing{position:absolute;z-index:7;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;border:3px solid rgba(180,122,37,.65);pointer-events:none;animation:pulse 1.8s infinite}@keyframes pulse{0%{opacity:.95;transform:translate(-50%,-50%) scale(.92)}70%{opacity:.15;transform:translate(-50%,-50%) scale(1.25)}100%{opacity:.02;transform:translate(-50%,-50%) scale(1.25)}}
-    .panel{min-width:0;background:var(--panel);border-left:1px solid var(--line);display:grid;grid-template-rows:auto 1fr auto;min-height:0}.panelHead{padding:12px 14px;border-bottom:1px solid var(--line2);display:flex;align-items:start;justify-content:space-between;gap:10px}.panelHead h2{font-family:var(--serif);font-size:22px;line-height:1.15;margin:0}.panelHead .sub{color:var(--muted);font-size:12px;margin-top:2px}.panelBody{min-height:0;overflow:auto;padding:12px 14px}.panelFoot{border-top:1px solid var(--line2);padding:10px 14px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.emptyPanel{height:100%;display:grid;place-items:center;text-align:center;color:var(--muted);padding:30px}.statusCard{border-left:5px solid var(--gray);background:var(--panel2);border-radius:12px;padding:12px 13px;margin-bottom:14px}.statusCard.ocupado{border-color:var(--occupied)}.statusCard.pronto{border-color:var(--ready)}.statusCard.descansando{border-color:var(--resting)}.statusCard.cultivo{border-color:var(--crop)}.statusCard.descanso{border-color:var(--blue)}.statusCard.infra{border-color:#8d938c}.statusCard b{font-family:var(--serif);font-size:19px}.statusCard div{color:var(--muted);font-size:12px;margin-top:2px}.section{border-top:1px solid var(--line2);padding-top:14px;margin-top:16px}.section:first-child{border-top:0;padding-top:0;margin-top:0}.sectionTitle{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--muted);margin-bottom:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.field{margin-bottom:10px}.pillRow{display:flex;flex-wrap:wrap;gap:6px}.pill{padding:6px 8px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:12px;cursor:pointer;color:var(--muted);font-weight:700}.pill.active{background:var(--accent);border-color:var(--accent);color:#fff}.eventList{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}.eventItem{display:grid;grid-template-columns:86px 1fr auto;gap:8px;align-items:start;background:#fff;border:1px solid var(--line2);border-left:4px solid var(--blue);border-radius:10px;padding:8px}.eventItem.soon{border-left-color:var(--warn)}.eventDate{font-family:var(--mono);font-size:11px;color:var(--muted);padding-top:2px}.eventTxt b{display:block;font-size:13px}.eventTxt span{display:block;color:var(--muted);font-size:12px;margin-top:1px}.eventAdd{display:grid;grid-template-columns:116px 120px 1fr auto;gap:7px}.hint{font-size:12px;color:var(--muted);background:var(--panel2);border:1px dashed var(--line);border-radius:10px;padding:9px 10px}.listView{height:100%;overflow:auto;padding:18px}.tableCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.06)}table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line2);padding:9px 10px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:var(--panel2);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;cursor:pointer;z-index:2}tr:hover td{background:#fffdf4}.num{font-family:var(--mono)}.statusPill{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}.statusPill.ocupado{background:#f4d8d5;color:#84231b}.statusPill.pronto{background:#d9efd9;color:#1b651f}.statusPill.descansando{background:#f5e4b8;color:#6d4706}.statusPill.cultivo{background:#f2dfc4;color:#7b4d0e}.statusPill.descanso{background:#dbe7ef;color:#29495e}.statusPill.infra{background:#e8e9e7;color:#555b54}.statusPill.sin_manejo{background:#f1f1ef;color:#697069}.agendaHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.agendaHeader h2{font-family:var(--serif);font-size:26px;margin:0}.badge{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 8px;background:#fff;color:var(--muted);font-size:12px}.hide{display:none!important}.toast{position:fixed;right:18px;bottom:18px;background:#1f2a1f;color:#fff;border-radius:12px;padding:11px 14px;box-shadow:var(--shadow);z-index:100;opacity:0;transform:translateY(8px);transition:.18s}.toast.visible{opacity:1;transform:translateY(0)}
+    .panel{min-width:0;background:var(--panel);border-left:1px solid var(--line);display:grid;grid-template-rows:auto 1fr auto;min-height:0}.panelHead{padding:12px 14px;border-bottom:1px solid var(--line2);display:flex;align-items:start;justify-content:space-between;gap:10px}.panelHead h2{font-family:var(--serif);font-size:22px;line-height:1.15;margin:0}.panelHead .sub{color:var(--muted);font-size:12px;margin-top:2px}.panelBody{min-height:0;overflow:auto;padding:12px 14px}.panelFoot{border-top:1px solid var(--line2);padding:10px 14px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.emptyPanel{height:100%;display:grid;place-items:center;text-align:center;color:var(--muted);padding:30px}.statusCard{border-left:5px solid var(--gray);background:var(--panel2);border-radius:12px;padding:12px 13px;margin-bottom:14px}.statusCard.ocupado{border-color:var(--occupied)}.statusCard.pronto{border-color:var(--ready)}.statusCard.descansando{border-color:var(--resting)}.statusCard.cultivo{border-color:var(--crop)}.statusCard.descanso{border-color:var(--blue)}.statusCard.infra{border-color:#8d938c}.statusCard b{font-family:var(--serif);font-size:19px}.statusCard div{color:var(--muted);font-size:12px;margin-top:2px}.section{border-top:1px solid var(--line2);padding-top:14px;margin-top:16px}.section:first-child{border-top:0;padding-top:0;margin-top:0}.sectionTitle{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--muted);margin-bottom:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.field{margin-bottom:10px}.pillRow{display:flex;flex-wrap:wrap;gap:6px}.pill{padding:6px 8px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:12px;cursor:pointer;color:var(--muted);font-weight:700}.pill.active{background:var(--accent);border-color:var(--accent);color:#fff}.eventList{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}.eventItem{display:grid;grid-template-columns:86px 1fr auto;gap:8px;align-items:start;background:#fff;border:1px solid var(--line2);border-left:4px solid var(--blue);border-radius:10px;padding:8px}.eventItem.soon{border-left-color:var(--warn)}.eventDate{font-family:var(--mono);font-size:11px;color:var(--muted);padding-top:2px}.eventTxt b{display:block;font-size:13px}.eventTxt span{display:block;color:var(--muted);font-size:12px;margin-top:1px}.eventAdd{display:grid;grid-template-columns:116px 120px 1fr auto;gap:7px}.hint{font-size:12px;color:var(--muted);background:var(--panel2);border:1px dashed var(--line);border-radius:10px;padding:9px 10px}.listView{height:100%;overflow:auto;padding:18px}.tableCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.06)}table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line2);padding:9px 10px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:var(--panel2);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;cursor:default;z-index:2}th[data-sort]{cursor:pointer}tr:hover td{background:#fffdf4}.num{font-family:var(--mono)}.statusPill{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}.statusPill.ocupado{background:#f4d8d5;color:#84231b}.statusPill.pronto{background:#d9efd9;color:#1b651f}.statusPill.descansando{background:#f5e4b8;color:#6d4706}.statusPill.cultivo{background:#f2dfc4;color:#7b4d0e}.statusPill.descanso{background:#dbe7ef;color:#29495e}.statusPill.infra{background:#e8e9e7;color:#555b54}.statusPill.sin_manejo{background:#f1f1ef;color:#697069}.agendaHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.agendaHeader h2{font-family:var(--serif);font-size:26px;margin:0}.badge{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 8px;background:#fff;color:var(--muted);font-size:12px}.hide{display:none!important}.toast{position:fixed;right:18px;bottom:18px;background:#1f2a1f;color:#fff;border-radius:12px;padding:11px 14px;box-shadow:var(--shadow);z-index:100;opacity:0;transform:translateY(8px);transition:.18s}.toast.visible{opacity:1;transform:translateY(0)}
     @media(max-width:1050px){.main{display:block;overflow:auto}.mapPane{height:max(430px,calc(100dvh - 180px));min-height:430px}.panel{border-left:0;border-top:1px solid var(--line);height:min(58dvh,520px);min-height:360px;max-height:none}.subbar{grid-template-columns:1fr}.legend{margin-left:0}.grid2,.grid3,.eventAdd{grid-template-columns:1fr}.select-mini{width:100%}.search{max-width:none}.app{min-height:0}.brand{min-width:0}}
 
 
@@ -109,7 +109,7 @@
 
     .mapTools{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 16px;background:rgba(255,253,247,.72);border-bottom:1px solid var(--line2);font-size:12px;color:var(--muted)}
     .mapTools b{color:var(--text)}.mapTools .toolGroup{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.mapTools button{box-shadow:none;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;background:#fff}.mapTools button.active{background:var(--accent);border-color:var(--accent);color:#fff}
-    .listHeader{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}.listHeader h2{font-family:var(--serif);font-size:26px;line-height:1;margin:0}.listHeader p{margin:5px 0 0;color:var(--muted);font-size:13px}.summaryGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}.summaryBox{background:var(--panel);border:1px solid var(--line2);border-radius:14px;padding:11px 12px;box-shadow:0 2px 10px rgba(0,0,0,.04);border-left:5px solid var(--lot-color,var(--accent))}.summaryBox span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:900}.summaryBox b{display:block;font-family:var(--serif);font-size:24px;line-height:1.05;margin-top:4px}.summaryBox small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.categoryStrip{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.categoryStrip .catBtn{background:#fff}.rowAction{white-space:nowrap}.rowAction button{padding:5px 8px;border-radius:999px;box-shadow:none;background:#fff;font-size:11px}
+    .listHeader{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}.listHeader h2{font-family:var(--serif);font-size:26px;line-height:1;margin:0}.listHeader p{margin:5px 0 0;color:var(--muted);font-size:13px}.summaryGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}.summaryBox{background:var(--panel);border:1px solid var(--line2);border-radius:14px;padding:11px 12px;box-shadow:0 2px 10px rgba(0,0,0,.04);border-left:5px solid var(--lot-color,var(--accent))}.summaryBox span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:900}.summaryBox b{display:block;font-family:var(--serif);font-size:24px;line-height:1.05;margin-top:4px}.summaryBox small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.categoryStrip{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.categoryStrip .catBtn{background:#fff}.rowAction{white-space:nowrap}.rowAction button{padding:5px 8px;border-radius:999px;box-shadow:none;font-size:11px}.rowAction button:not(.primary):not(.danger):not(.ghost){background:#fff}
 
     .lotPoly.infraPoly{fill-opacity:.07;stroke-dasharray:1.2 1.2;stroke-width:.18;mix-blend-mode:normal}.lotPoly.infraPoly:hover{fill-opacity:.15;stroke-width:.32}
     .mapInfraMarker.infraIcon{width:30px;height:30px;min-width:30px;min-height:30px;border-radius:10px;padding:0;background:rgba(255,255,255,.92);border:1.8px solid rgba(54,64,48,.78);color:#34402f;box-shadow:0 2px 8px rgba(0,0,0,.18);font-family:var(--sans);display:grid;place-items:center;overflow:visible}.mapInfraMarker.infraIcon:hover{transform:translate(-50%,-50%) scale(1.12)}.mapInfraMarker.infraIcon .infraSymbol{font-size:17px;line-height:1;display:block}.mapInfraMarker.infraIcon .infraTiny{position:absolute;left:50%;top:31px;transform:translateX(-50%);font-size:8px;font-weight:900;letter-spacing:.05em;background:rgba(255,255,255,.88);border:1px solid rgba(0,0,0,.10);border-radius:999px;padding:1px 5px;white-space:nowrap;color:#4b5647;text-transform:uppercase}.mapInfraMarker.infraIcon.manga{border-radius:50%;border-color:#7b5b2a;color:#6b4b11}.mapInfraMarker.infraIcon.manga .infraSymbol{font-size:16px}.mapInfraMarker{position:absolute;z-index:10;transform:translate(-50%,-50%);cursor:pointer}.infraLayerHint{position:absolute;left:12px;bottom:12px;z-index:11;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:11px;color:var(--muted);box-shadow:0 2px 8px rgba(0,0,0,.08)}.sheetQuickForm{background:var(--panel);border:1px solid var(--line2);border-left:5px solid var(--crop);border-radius:14px;padding:12px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.04)}.sheetQuickForm h3{font-family:var(--serif);font-size:18px;margin:0 0 4px}.sheetQuickForm p{margin:0 0 10px;color:var(--muted);font-size:12px}.sheetQuickGrid{display:grid;grid-template-columns:1.1fr 1fr .9fr 1fr auto;gap:8px;align-items:end}.categoryStrip .catBtn.activeCat{background:#fff0c9;border-color:#cda85b}.filterNotice{display:flex;align-items:center;gap:8px;margin:0 0 12px;background:#fff8df;border:1px solid #ead7ad;color:#624711;border-radius:12px;padding:9px 11px;font-size:12px}.filterNotice button{padding:4px 8px;font-size:11px;background:#fff}@media(max-width:1050px){.sheetQuickGrid{grid-template-columns:1fr 1fr}.sheetQuickGrid .primary{grid-column:1/-1}}.waterPin{position:absolute;z-index:9;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50% 50% 50% 0;background:#2d7fc1;rotate:-45deg;border:2px solid rgba(255,255,255,.96);box-shadow:0 2px 8px rgba(24,85,135,.35);pointer-events:none}.waterPin::after{content:'';position:absolute;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.85);left:4px;top:4px}.waterPin.dimmed{opacity:.18;filter:grayscale(.8)}
@@ -280,7 +280,7 @@
     .catalogHead,.guideHead{position:sticky;top:0;z-index:3;background:var(--panel);box-shadow:0 1px 0 var(--line2)}.integrityList{display:flex;flex-direction:column;gap:6px}.integrityItem{display:grid;grid-template-columns:20px 1fr;gap:7px;align-items:start;border:1px solid var(--line2);border-left:4px solid var(--integrity-color,var(--warn));border-radius:9px;background:var(--panel2);padding:7px 8px;font-size:10.5px}.integrityItem i{font-style:normal;font-weight:950;color:var(--integrity-color,var(--warn))}.integrityItem b{display:block}.integrityItem small{display:block;color:var(--muted);margin-top:1px}.integrityOk{border-left:4px solid var(--ready);background:#eef7eb;border-radius:9px;padding:10px;color:#215f2b;font-size:11px}
     button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid rgba(47,125,58,.45);outline-offset:2px}
     .main{grid-template-columns:minmax(0,1fr) clamp(340px,22vw,380px)}.plannerView.expanded{height:100dvh}.plannerView.expanded .timelineShell{max-height:calc(100dvh - 255px)}
-    @media(max-width:1450px),(max-height:820px){.eventKpiGrid{grid-template-columns:repeat(6,minmax(105px,1fr));gap:5px}.eventKpi{padding:5px 7px}.eventKpi b{font-size:18px}.eventKpi small{display:none}.eventsView .agendaHeader{margin-bottom:7px}.eventsView .histFilters{padding:6px 8px;margin-bottom:7px}.eventsView .histFilters .field{min-width:105px}.eventsView .histFilters label{font-size:8px}.eventsView .histFilters input,.eventsView .histFilters select{padding:6px 7px;font-size:10px}.eventModeTabs{margin-bottom:6px}.eventModeTabs button{padding:5px 8px;font-size:10px}.guideCard{width:min(900px,calc(100vw - 20px));max-height:calc(100dvh - 20px)}.catalogCard{width:min(1000px,calc(100vw - 20px))}}
+    @media(max-width:1450px),(max-height:820px){.eventKpiGrid{grid-template-columns:repeat(6,minmax(105px,1fr));gap:5px}.eventKpi{padding:5px 7px}.eventKpi b{font-size:18px}.eventKpi small{display:none}.eventsView .agendaHeader{margin-bottom:7px}.eventsView .histFilters{padding:6px 8px;margin-bottom:7px}.eventsView .histFilters .field{min-width:105px}.eventsView .histFilters label{font-size:10px}.eventsView .histFilters input,.eventsView .histFilters select{padding:6px 7px;font-size:10px}.eventModeTabs{margin-bottom:6px}.eventModeTabs button{padding:5px 8px;font-size:10px}.guideCard{width:min(900px,calc(100vw - 20px));max-height:calc(100dvh - 20px)}.catalogCard{width:min(1000px,calc(100vw - 20px))}}
     @media(max-width:1050px){.eventKpiGrid{grid-template-columns:repeat(3,minmax(100px,1fr))}.eventAnalysisGrid{grid-template-columns:1fr}}
     @media(max-height:700px) and (min-width:761px){.plannerRangeTools{display:flex;flex-wrap:nowrap;overflow-x:auto;align-items:end;gap:5px;scrollbar-width:thin}.plannerRangeTools>*{flex:none}.plannerRangeTools .field{min-width:108px}.plannerRangeTools #gpApplyRange{position:sticky;right:0;z-index:3;background:var(--accent);box-shadow:-8px 0 12px var(--panel)}.timelineShell{height:calc(100dvh - 245px);min-height:280px}.plannerView.expanded .timelineShell{height:calc(100dvh - 175px);min-height:360px}}
     @media(max-width:760px){.catalogModal{padding:5px}.catalogAdd{grid-template-columns:1fr}.catalogCard{width:calc(100vw - 10px);max-height:calc(100dvh - 10px)}.catalogHead p{display:none}.mapCattleFormGrid.two{grid-template-columns:1fr}.mapCattleAction{min-height:44px}.lotHoverCard{display:none !important}.plannerView.expanded .timelineShell{max-height:calc(100dvh - 320px)}}
@@ -295,7 +295,7 @@
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="brand"><h1 id="activeWorkspaceName">AgroPlano Gestión Demo</h1><span id="activeWorkspaceMeta">v1.3.0 · DATOS FICTICIOS · NO USAR PARA OPERAR</span></div>
+    <div class="brand"><h1 id="activeWorkspaceName">AgroPlano Gestión Demo</h1><span id="activeWorkspaceMeta">v1.3.1 · DATOS FICTICIOS · NO USAR PARA OPERAR</span></div>
     <nav class="toolbar" aria-label="Secciones principales">
       <button id="viewMap" class="primary">Mapa</button>
       <button id="viewHacienda">Hacienda</button>
@@ -329,7 +329,7 @@
   </header>
   <div class="subbar">
     <div class="filters">
-      <input id="searchBox" class="search" placeholder="Buscar lote, código, cultivo, categoría, nota…" />
+      <input id="searchBox" class="search" aria-label="Buscar lotes y registros" placeholder="Buscar lote, código, cultivo, categoría, nota…" />
     </div>
     <div class="zoomCtl">
       <span class="mapOnly">Zoom mapa</span><button id="zoomOut" class="ghost mapOnly" title="Alejar el mapa" aria-label="Alejar el mapa">−</button><input id="zoom" class="mapOnly" type="range" min="20" max="300" step="5" aria-label="Zoom del mapa"><span id="zoomText" class="mapOnly">100%</span><button id="zoomIn" class="ghost mapOnly" title="Acercar el mapa" aria-label="Acercar el mapa">+</button><button id="fitMap" class="ghost mapOnly" title="Ver el plano completo, tanto en ancho como en alto">Ajustar</button><button id="resetMapZoom" class="ghost mapOnly" title="Volver al 100%">100%</button><label class="languagePicker" for="languageSelect"><span class="languagePickerLabel">EN / ES</span><select id="languageSelect" aria-label="Language / Idioma"><option value="en">English</option><option value="es">Español</option></select></label><button id="userNameButton" class="ghost" title="Usuario y permisos">Usuario local</button><span class="saveStatus" id="saveStatus">guardado en este equipo</span><span id="syncStatus" class="syncChip" title="Abrir estado de datos compartidos">Preparando…</span><button id="backupWarn" class="backupWarn" style="display:none" title="Exportar respaldo JSON ahora"></button>
@@ -388,7 +388,7 @@ const DEFAULT_PLANNER_MONTHS = clamp(Number(DEMO_SETTINGS.plannerMonths||12),1,1
 const DEFAULT_DASHBOARD_START = parseDate(DEMO_SETTINGS.dashboardStart) || DEFAULT_CYCLE_START;
 const DEFAULT_DASHBOARD_END = parseDate(DEMO_SETTINGS.dashboardEnd) || DEFAULT_CYCLE_END;
 const STORAGE_KEY = 'agroplano_demo_state_v1';
-const APP_VERSION = '1.3.0';
+const APP_VERSION = '1.3.1';
 const SCHEMA_VERSION = 10;
 const SYNC_CHANNEL_NAME = 'agroplano_demo_sync_v1';
 const GEOMETRY_VERSION = 'agroplano-horizonte-sintetico-v1';
@@ -1150,7 +1150,7 @@ function commitDataNow(options={}){clearTimeout(saveTimer);saveTimer=null;saveNo
 
 function pad2(n){ return String(n).padStart(2,'0'); }
 function localIsoDate(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
-function today(){ return localIsoDate(new Date()); }
+function today(){ return parseDate(window.AGROPLANO_DEMO?.meta?.demoToday) || localIsoDate(new Date()); }
 function parseDate(value){
   const s = String(value ?? '').trim();
   if(!s || s === '—') return '';
@@ -1231,6 +1231,10 @@ function showToast(msg){
   t.classList.add('visible');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(()=>t.classList.remove('visible'), 2200);
+}
+function runUiAction(action){
+  try{return action();}
+  catch(error){showToast(error?.message || 'No se pudo completar la acción');return null;}
 }
 
 function getLot(id=state.selectedId){ return state.lots.find(l => String(l.id) === String(id)); }
@@ -1388,8 +1392,28 @@ function render(){
   else if(state.view === 'agenda') renderAgendaView();
   else renderMapView();
   if(!$('#catalogModal')?.hidden) renderCatalogModal();
+  enhanceRenderedAccessibility();
   applyCloudRoleUi();
   window.AgroPlanoI18n?.apply?.(document);
+}
+
+function enhanceRenderedAccessibility(){
+  const root=$('#main');if(!root)return;
+  root.querySelectorAll('.field').forEach(field=>{
+    const label=field.querySelector(':scope > label');if(!label)return;
+    const controls=Array.from(field.querySelectorAll(':scope > input, :scope > select, :scope > textarea'));
+    controls.forEach((control,index)=>{
+      if(index===0&&control.id){label.htmlFor=control.id;return;}
+      if(control.hasAttribute('aria-label')||control.hasAttribute('aria-labelledby'))return;
+      const detail=control.getAttribute('placeholder')||control.getAttribute('name')||(index?String(index+1):'');
+      control.setAttribute('aria-label',[label.textContent.trim(),detail].filter(Boolean).join(' · '));
+    });
+  });
+  root.querySelectorAll('table th').forEach(th=>th.setAttribute('scope','col'));
+  root.querySelectorAll('th[data-sort]').forEach(th=>{
+    th.tabIndex=0;
+    th.setAttribute('aria-sort',state.sortKey===th.dataset.sort?(state.sortDir==='asc'?'ascending':'descending'):'none');
+  });
 }
 
 
@@ -1474,22 +1498,23 @@ function borderForColor(hex){
   return `rgb(${d(r)},${d(g)},${d(b)})`;
 }
 function markerLabel(lot){
+  const translated=value=>window.AgroPlanoI18n?.t?.(String(value??''))||String(value??'');
   if(state.colorMode === 'hectareas' && lot.areaHa) return `${lot.areaHa} ha`;
-  if(state.colorMode === 'aguadas') return hasWaterInfra(lot) ? 'Agua' : '—';
+  if(state.colorMode === 'aguadas') return hasWaterInfra(lot) ? translated('Agua') : '—';
   const heads = Number(lot.cattle?.heads || 0);
   if(heads > 0){
-    const opens=currentOccupancies(lot.id);if(opens.length>1)return `${opens.length}R ${heads}`;
+    const opens=currentOccupancies(lot.id);if(opens.length>1)return `${opens.length}${window.AgroPlanoI18n?.getLocale?.()==='en'?'H':'R'} ${heads}`;
     const c = prettyValue(lot.cattle?.category || lot.cattle?.rodeo, 'Hac');
-    return `${shortToken(c, 5)} ${heads}`;
+    return `${shortToken(translated(c), 5)} ${heads}`;
   }
-  if(lot.crop?.current) return shortToken(lot.crop.current, 8);
+  if(lot.crop?.current) return shortToken(translated(lot.crop.current), 8);
   if(lot.cattle?.lastExit){
     const rest = daysBetween(lot.cattle.lastExit);
-    return rest === null ? 'Desc.' : `${rest}d`;
+    return rest === null ? (window.AgroPlanoI18n?.getLocale?.()==='en'?'Rest':'Desc.') : `${rest}d`;
   }
-  if(lot.use === 'regeneracion'){ const d = lot.regeneration?.startDate ? daysBetween(lot.regeneration.startDate) : null; return d===null ? 'Regen.' : `${d}d`; }
-  if(lot.quality?.class) return shortToken(QUALITY_LABELS[lot.quality.class] || lot.quality.class, 8);
-  if(lot.use && lot.use !== 'sin_manejo') return shortToken(USE_LABELS[lot.use] || lot.use, 8);
+  if(lot.use === 'regeneracion'){ const d = lot.regeneration?.startDate ? daysBetween(lot.regeneration.startDate) : null; return d===null ? (window.AgroPlanoI18n?.getLocale?.()==='en'?'Regen':'Regen.') : `${d}d`; }
+  if(lot.quality?.class) return shortToken(translated(QUALITY_LABELS[lot.quality.class] || lot.quality.class), 8);
+  if(lot.use && lot.use !== 'sin_manejo') return shortToken(translated(USE_LABELS[lot.use] || lot.use), 8);
   return '—';
 }
 function shortToken(v, max=8){
@@ -2529,7 +2554,8 @@ function renderMapView(){
     const dim = match ? (hasActiveVisualFilter() ? ' highlighted' : '') : ' dimmed';
     const ring = hasSoonEvent(l) ? `<div class="eventRing" style="left:${l.x}%;top:${l.y}%"></div>` : '';
     const label = markerLabel(l);
-    return `${ring}<div class="marker visualMarker ${st.code}${sel}${dim}" data-id="${esc(l.id)}" tabindex="0" role="button" style="left:${l.x}%;top:${l.y}%;background:${esc(color)};border-color:${esc(borderForColor(color))};color:${esc(textForColor(color))}" aria-label="Lote ${esc(l.number)} · ${esc(l.code)} · ${esc(cat.group)} ${esc(cat.label)} · ${esc(st.label)}"><b>${esc(l.number)}</b><span>${esc(label)}</span></div>`;
+    const categoryDescription=normKey(cat.group)===normKey(cat.label)?cat.label:`${cat.group}: ${cat.label}`;
+    return `${ring}<div class="marker visualMarker ${st.code}${sel}${dim}" data-id="${esc(l.id)}" tabindex="0" role="button" style="left:${l.x}%;top:${l.y}%;background:${esc(color)};border-color:${esc(borderForColor(color))};color:${esc(textForColor(color))}" aria-label="Lote ${esc(l.number)} · ${esc(l.code)} · ${esc(categoryDescription)} · ${esc(st.label)}"><b>${esc(l.number)}</b><span>${esc(label)}</span></div>`;
   }).join('');
   const waterPins = lots.filter(l => hasWaterInfra(l)).map(l => {
     const dim = matchesVisualFilter(l) ? '' : ' dimmed';
@@ -3198,7 +3224,7 @@ function attachPanelEvents(){
     try{const destId=$('#guideMoveTo')?.value,dest=destId?getLot(destId):null;if(!dest)throw new Error('Elegí lote destino.');const date=requireDateInput('#guideMoveDate',today()),note=$('#guideMoveNote')?.value.trim()||'',snap=selectedGuideOccupancy('mover');recordCattleMovement({action:'mover',originId:lot.id,destinationId:dest.id,periodId:snap.open?.id||'',date,note,source:'map_move'});state.selectedId=dest.id;commitDataNow({cloudAction:'movement',cloudNote:`Movimiento de hacienda a ${lotShortLabel(dest)}`});render();showToast(`${snap.rodeo||snap.category||'Rodeo'} movido a ${lotShortLabel(dest)}`);}
     catch(e){showToast(e.message);}
   });
-  $('#guideCropSave')?.addEventListener('click', () => {
+  $('#guideCropSave')?.addEventListener('click', () => runUiAction(() => {
     const crop = $('#guideCrop')?.value || '';
     if(!crop){ showToast('Elegí cultivo'); return; }
     const date = readDateInput('#guideSownDate', today());
@@ -3213,8 +3239,8 @@ function attachPanelEvents(){
     const evTitle = wasGanadero ? `Forraje actual: ${crop}` : `Cultivo actual: ${crop}`;
     addLotEvent(lot, evType, evTitle, lot.crop.previous ? `Antecesor: ${lot.crop.previous}` : '', date, {kind: wasGanadero ? 'forage_current' : 'crop_current', crop});
     scheduleSave(); render(); showToast(wasGanadero ? 'Forraje guardado' : 'Cultivo guardado');
-  });
-  $('#guideTaskAdd')?.addEventListener('click', () => {
+  }));
+  $('#guideTaskAdd')?.addEventListener('click', () => runUiAction(() => {
     const task = $('#guideTaskName')?.value.trim();
     if(!task){ showToast('Escribí la labor'); return; }
     const date = readDateInput('#guideTaskDate', today());
@@ -3223,8 +3249,8 @@ function attachPanelEvents(){
     const evType = lot.use === 'ganaderia' ? 'Forraje' : 'Agrícola';
     addLotEvent(lot, evType, task, $('#guideTaskNote')?.value.trim() || '', date, {kind: lot.use === 'ganaderia' ? 'forage_labor' : 'crop_labor', task});
     scheduleSave(); render(); showToast('Labor agregada');
-  });
-  $('#guideProblemAdd')?.addEventListener('click', () => {
+  }));
+  $('#guideProblemAdd')?.addEventListener('click', () => runUiAction(() => {
     const type = $('#guideProblemType')?.value || 'Otro';
     const desc = $('#guideProblemDesc')?.value.trim() || type;
     const date = readDateInput('#guideProblemDate', today());
@@ -3235,7 +3261,7 @@ function attachPanelEvents(){
     if(type === 'Sombra') lot.resources.shade = txt;
     addLotEvent(lot, type === 'Sanidad' ? 'Sanidad' : 'Recurso', `${type}: ${desc}`, 'Carga guiada', date, {kind:'resource_or_problem', resource:type, description:desc});
     scheduleSave(); render(); showToast('Problema/tarea agregado');
-  });
+  }));
   $('#guideWaterOk')?.addEventListener('click', () => {
     lot.resources.water = 'OK';
     addLotEvent(lot, 'Recurso', 'Agua OK', '', today());
@@ -3266,7 +3292,7 @@ function attachPanelEvents(){
     try{const count=Number($('#guideMortalityCount')?.value||0);if(!Number.isInteger(count)||count<1)throw new Error('Cargá una cantidad entera de mortandad.');const date=requireDateInput('#guideMortalityDate',today()),reason=$('#guideMortalityReason')?.value.trim()||'';if(!reason)throw new Error('Cargá la causa o escribí “Sin determinar”.');const snap=selectedGuideOccupancy('aplicar la mortandad');recordInventoryReduction({action:'mortandad',originId:lot.id,periodId:snap.open?.id||'',heads:count,date,note:reason,reason,source:'map_mortality'});commitDataNow({cloudAction:'movement',cloudNote:`Mortandad: ${count} cabezas`});render();showToast('Mortandad registrada: existencias e historial actualizados');}
     catch(e){showToast(e.message);}
   });
-  $('#guideRegenSave')?.addEventListener('click', () => {
+  $('#guideRegenSave')?.addEventListener('click', () => runUiAction(() => {
     const date = readDateInput('#guideRegenStart', today());
     const previous = $('#guideRegenPrevious')?.value.trim() || lot.regeneration?.previousCrop || lot.history?.previousCrops || '';
     const note = $('#guideRegenNote')?.value.trim() || '';
@@ -3280,7 +3306,7 @@ function attachPanelEvents(){
     lot.history.previousCrops = previous || lot.history.previousCrops || '';
     addLotEvent(lot, 'Regeneración', 'Inicio de regeneración espontánea', previous ? `Viene de: ${previous}${note ? ' · '+note : ''}` : note, date, {kind:'regeneracion_inicio', previousCrop:previous});
     scheduleSave(); render(); showToast('Regeneración guardada');
-  });
+  }));
   $('#guideHistorySave')?.addEventListener('click', () => {
     lot.quality.class = normalizeQuality($('#guideQuality')?.value || lot.quality.class || '');
     lot.quality.score = $('#guideQualityScore')?.value || lot.quality.score || '';
@@ -3294,13 +3320,13 @@ function attachPanelEvents(){
   $('#paintHacienda')?.addEventListener('click', () => { state.colorMode='hacienda'; state.categoryFilter={mode:'hacienda', value:visualCategory(lot,'hacienda').key}; state.view='map'; scheduleSave(); render(); });
   $('#paintCultivo')?.addEventListener('click', () => { state.colorMode='cultivo'; state.categoryFilter={mode:'cultivo', value:visualCategory(lot,'cultivo').key}; state.view='map'; scheduleSave(); render(); });
   $('#paintQuality')?.addEventListener('click', () => { state.colorMode='calidad'; state.categoryFilter={mode:'calidad', value:visualCategory(lot,'calidad').key}; state.view='map'; scheduleSave(); render(); });
-  $('#addEvent')?.addEventListener('click', () => {
+  $('#addEvent')?.addEventListener('click', () => runUiAction(() => {
     const title = $('#evTitle').value.trim();
     if(!title) return;
     const resp = $('#evResp')?.value.trim() || '';
     addLotEvent(lot, $('#evType').value, title, resp ? `Resp: ${resp}` : '', readDateInput('#evDate', today()), resp ? {responsable: resp} : {});
     scheduleSave(); render();
-  });
+  }));
   $$('[data-del-event]').forEach(btn => btn.addEventListener('click', () => { const ref=btn.dataset.delEvent;const idx=lot.events.findIndex((ev,i)=>String(ev.id||i)===String(ref));if(idx>=0){const ev=lot.events[idx],kind=String(ev.meta?.kind||'');if(kind.startsWith('cattle_')||['grazing_period','mortandad'].includes(kind)){showToast('Ese registro modifica datos conectados y no se puede borrar desde el historial');return;}lot.events.splice(idx,1);scheduleSave();render();} }));
   $$('[data-done-event]').forEach(btn => btn.addEventListener('click', () => { const ref=btn.dataset.doneEvent;const ev=lot.events.find((ev,i)=>String(ev.id||i)===String(ref));if(ev&&eventStatus(ev)!=='anulado'){const next=eventStatus(ev)==='realizado'?'planificado':'realizado';setEventStatus(ev,next);scheduleSave();render();showToast(next==='realizado'?'Marcada realizada':'Vuelta a planificado');} }));
   $('#areaNotesSave')?.addEventListener('click', () => { lot.notes = $('#areaNotes').value.trim(); scheduleSave(); render(); showToast('Nota guardada'); });
@@ -3352,7 +3378,7 @@ function renderTableView(){
     const quality = QUALITY_LABELS[l.quality?.class] || prettyValue(l.quality?.class, '—');
     return `<tr data-row-id="${esc(l.id)}"><td class="num"><b>${esc(l.number)}</b></td><td>${esc(l.code || '—')}</td><td><span class="tableColorDot" style="--dot:${esc(color)}"></span><b>${esc(now.title)}</b><br><small>${esc(now.small)}</small></td><td>${esc(cat.group)}<br><small>${esc(cat.label)}</small></td><td><span class="statusPill ${st.code}">${esc(st.label)}</span><br><small>${esc(st.detail)}</small></td><td class="num">${esc(l.areaHa || '—')}<br><small>${esc(l.areaGroup || '')}</small></td><td>${esc(l.cattle.heads || '—')}<br><small>${esc(l.cattle.category || '')}${l.cattle.rodeo ? ' · '+esc(l.cattle.rodeo) : ''}</small></td><td>${esc(l.crop.current || '—')}<br><small>${esc(l.crop.previous ? 'Ant. '+l.crop.previous : '')}${l.crop.next ? ' · Sig. '+esc(l.crop.next) : ''}</small></td><td><span class="qualityPill">${esc(quality)}</span><br><small>${esc(l.quality?.notes || '')}</small></td><td>${esc(l.history?.previousUse || l.history?.previousCrops || '—')}<br><small>${esc(l.history?.previousRodeo || '')}</small></td><td>${esc(nextItemText(l))}</td><td class="rowAction"><button class="small" data-go-map-id="${esc(l.id)}">Ver en mapa</button><button class="small" data-edit-id="${esc(l.id)}">Editar</button></td></tr>`;
   }).join('') || `<tr><td colspan="11" style="text-align:center;color:var(--muted);padding:28px">Sin resultados</td></tr>`;
-  $('#main').innerHTML = `<section class="listView">${renderStats()}${categoryStrip('estado')}${categoryStrip('uso')}${activeFilterNotice()}<div class="tableCard"><table><thead><tr><th data-sort="number">Lote</th><th data-sort="code">Ref.</th><th>Hay ahora</th><th>Categoría visual</th><th data-sort="status">Estado</th><th data-sort="areaHa">ha</th><th data-sort="heads">Hacienda</th><th data-sort="crop">Cultivo</th><th>Calidad</th><th>Antes</th><th>Próximo</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+  $('#main').innerHTML = `<section class="listView">${renderStats()}${categoryStrip('estado')}${categoryStrip('uso')}${activeFilterNotice()}<div class="tableCard"><table><thead><tr><th data-sort="number">Lote</th><th data-sort="code">Ref.</th><th>Hay ahora</th><th>Categoría visual</th><th data-sort="status">Estado</th><th data-sort="areaHa">ha</th><th data-sort="heads">Hacienda</th><th data-sort="crop">Cultivo</th><th>Calidad</th><th>Antes</th><th>Próximo</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
   attachTableEvents();
 }
 
@@ -3374,7 +3400,11 @@ function attachTableEvents(){
     clearSelectionIfFilteredOut();
     scheduleSave(); render();
   }));
-  $$('th[data-sort]').forEach(th => th.addEventListener('click', () => { const k=th.dataset.sort; if(state.sortKey===k) state.sortDir=state.sortDir==='asc'?'desc':'asc'; else {state.sortKey=k;state.sortDir='asc';} scheduleSave(); render(); }));
+  const applySort=th=>{const k=th.dataset.sort;if(state.sortKey===k)state.sortDir=state.sortDir==='asc'?'desc':'asc';else{state.sortKey=k;state.sortDir='asc';}scheduleSave();render();};
+  $$('th[data-sort]').forEach(th=>{
+    th.addEventListener('click',()=>applySort(th));
+    th.addEventListener('keydown',event=>{if(event.key!=='Enter'&&event.key!==' ')return;event.preventDefault();applySort(th);});
+  });
 }
 
 
@@ -3400,7 +3430,7 @@ function attachListViewEvents(){
     clearSelectionIfFilteredOut();
     scheduleSave(); render();
   }));
-  $('#sheetCropSave')?.addEventListener('click', () => {
+  $('#sheetCropSave')?.addEventListener('click', () => runUiAction(() => {
     const lot = getLot($('#sheetCropLot')?.value);
     if(!lot){ showToast('Elegí lote'); return; }
     const crop = $('#sheetCropCurrent')?.value || '';
@@ -3417,7 +3447,7 @@ function attachListViewEvents(){
     addLotEvent(lot, isForageCropName(crop) ? 'Forraje' : 'Agrícola', `Planilla: ${crop}`, prev ? `Antecesor: ${prev}${task ? ' · '+task : ''}` : task, date, {kind:'crop_sheet', crop});
     state.colorMode='cultivo'; state.categoryFilter={mode:'cultivo', value:'cultivo:'+normKey(crop)};
     scheduleSave(); render(); showToast('Cultivo cargado desde planilla');
-  });
+  }));
 }
 const MONTH_NAMES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const WEEKDAY_MIN_ES = ['D','L','M','X','J','V','S'];
@@ -3620,7 +3650,7 @@ function renderPastoreoView(){
     <div class="timelineShell ${fitMode?`fitRange ${fitDensity}`:'scrollRange'}" data-day-count="${dates.length}"><table class="timeline ${fitMode?`fitRange ${fitDensity}`:'scrollRange'}">${colgroup}<thead><tr><th class="fixed colLot" rowspan="2" aria-label="Número de lote, código de planilla, referencia de plano y hectáreas">Lote · código</th>${monthHead}</tr><tr>${dayHead}</tr></thead><tbody>${rows}</tbody></table></div>
     ${fitMode?'<div class="tableScrollHint" style="display:block">Vista general ajustada: la identificación ocupa una sola columna y el Gantt usa el resto del ancho. Pasá el cursor por una ocupación para ver fechas, días, categoría, rodeo y cabezas.</div>':'<div class="tableScrollHint" style="display:block">Vista diaria: desplazá horizontalmente y pasá el cursor por cualquier bloque ocupado para ver el detalle.</div>'}
     <div id="grazingTooltip" class="grazingTooltip" role="tooltip"></div>
-    <details class="periodRecords"><summary><span>Registros exactos del plazo</span><small>${listedPeriods.length} períodos · abrir tabla</small></summary><div class="tableCard periodTable"><table><thead><tr><th>Rodeo</th><th>Lote</th><th>Desde</th><th>Hasta</th><th>Días en rango</th><th>Duración</th><th>Cab.</th><th>Tipo</th><th>Observación</th><th></th></tr></thead><tbody>${periodRows}</tbody></table></div></details>
+    <details class="periodRecords"><summary><span>Registros exactos del plazo</span><small>${listedPeriods.length} períodos · abrir tabla</small></summary><div class="tableCard periodTable"><table><thead><tr><th>Rodeo</th><th>Lote</th><th>Desde</th><th>Hasta</th><th>Días en rango</th><th>Duración</th><th>Cab.</th><th>Tipo</th><th>Observación</th><th>Acciones</th></tr></thead><tbody>${periodRows}</tbody></table></div></details>
   </section>`;
   const entryPanel=$('.plannerEntryPanel'),recordsPanel=$('.periodRecords');if(entryPanel&&recordsPanel)recordsPanel.before(entryPanel);
   attachPastoreoEvents();
@@ -3938,9 +3968,9 @@ function renderHaciendaView(){
     const action = $('#sheetMovAction')?.value;
     const lot = getLot($('#sheetMovLot')?.value);
     if(!lot){ showToast('Elegí lote'); return; }
-    const date = readDateInput('#sheetMovDate', today());
-    const cat=$('#sheetMovCat')?.value.trim()||'',rodeo=$('#sheetMovRodeo')?.value.trim()||'',heads=$('#sheetMovHeads')?.value||'',periodId=$('#sheetMovCurrent')?.value||'';
     try{
+      const date = readDateInput('#sheetMovDate', today());
+      const cat=$('#sheetMovCat')?.value.trim()||'',rodeo=$('#sheetMovRodeo')?.value.trim()||'',heads=$('#sheetMovHeads')?.value||'',periodId=$('#sheetMovCurrent')?.value||'';
       let result=null;
       if(action==='entrada')result=recordCattleMovement({action:'entrada',destinationId:lot.id,category:cat,rodeo,heads,date,source:'hacienda'});
       else if(action==='salida')result=recordCattleMovement({action:'salida',originId:lot.id,periodId,date,source:'hacienda'});
@@ -4043,7 +4073,7 @@ function renderRodeosView(){
   });
   const refreshEventPeriods=()=>{const lot=getLot($('#sheetEvtLot')?.value),select=$('#sheetEvtPeriod'),previous=select?.value||'',opens=lot?currentOccupancies(lot.id):[];if(select)select.innerHTML='<option value="">General del lote</option>'+opens.map(p=>`<option value="${esc(p.id)}" ${String(previous)===String(p.id)?'selected':''}>${esc(p.herdCode||'Sin rodeo')} · ${esc(p.category||'Sin categoría')} · ${p.heads||'?'} cab.</option>`).join('');};
   $('#sheetEvtLot')?.addEventListener('change',refreshEventPeriods);refreshEventPeriods();
-  $('#sheetEvtSave')?.addEventListener('click', () => {
+  $('#sheetEvtSave')?.addEventListener('click', () => runUiAction(() => {
     const lot = getLot($('#sheetEvtLot')?.value);
     const type = $('#sheetEvtType')?.value || '';
     if(!lot){ showToast('Elegí lote o área'); return; }
@@ -4053,7 +4083,7 @@ function renderRodeosView(){
     const note = $('#sheetEvtNote')?.value.trim() || '',periodId=$('#sheetEvtPeriod')?.value||'',snap=periodId?currentCattleSnapshot(lot,{periodId}):null;
     addLotEvent(lot, type, type, note, date, {kind:'evento_ganadero', eventType:type, category:snap?.category || '', rodeo:snap?.rodeo || '', heads:Number(snap?.heads || 0), lotId:lot.id,periodId:snap?.open?.id||''});
     commitDataNow(); render(); showToast(`${type} registrado en ${lotShortLabel(lot)}`);
-  });
+  }));
 }
 
 
@@ -4073,8 +4103,8 @@ function renderCycleView(){
   $('#main').innerHTML = `<section class="listView"><div class="listHeader"><div><h2>Ciclo anual</h2><p>Días de ocupación por lote, descanso actual, regeneración, encierres y mortandades.</p></div><span class="badge">${esc(fmtHoverDate(cycleStart()))} → ${esc(fmtHoverDate(cycleEnd()))}</span></div>
     <div class="cycleTools"><div class="field"><label>Inicio ciclo</label><input id="cycleStartInput" type="text" class="dateInput" data-date-input inputmode="numeric" placeholder="dd/mm/aaaa" value="${esc(dateInputValue(cycleStart()))}"></div><div class="field"><label>Fin ciclo</label><input id="cycleEndInput" type="text" class="dateInput" data-date-input inputmode="numeric" placeholder="dd/mm/aaaa" value="${esc(dateInputValue(cycleEnd()))}"></div><button id="cycleApply" class="primary">Aplicar ciclo</button><div class="cycleExplain">Pensado para ciclos tipo 30/06/2026 a 30/06/2027. Los días de ocupación salen de entradas, salidas y movimientos registrados. Si todavía no hay historial estructurado, usa la entrada actual cargada en el lote.</div></div>
     <div class="summaryGrid"><div class="summaryBox" style="--lot-color:#2f7d3a"><span>Días ocupación</span><b>${totalOcc}</b><small>suma lote-ciclo</small></div><div class="summaryBox" style="--lot-color:#d5a13f"><span>Lotes en descanso</span><b>${restingLots}</b><small>con última salida</small></div><div class="summaryBox" style="--lot-color:#6a9f45"><span>Regeneración</span><b>${regenLots}</b><small>vienen de agricultura</small></div><div class="summaryBox" style="--lot-color:#b9483e"><span>Mortandad</span><b>${deaths}</b><small>cabezas registradas</small></div></div>
-    <div class="tableCard"><table><thead><tr><th>Lote</th><th>Ocupación ciclo</th><th>Descanso actual</th><th>Regeneración</th><th>Hacienda</th><th>Cultivo/antecesor</th><th>Encierres</th><th>Mortandad</th><th>Estado</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
-  $('#cycleApply')?.addEventListener('click', () => { state.cycleStart = readDateInput('#cycleStartInput', state.cycleStart); state.cycleEnd = readDateInput('#cycleEndInput', state.cycleEnd); state.colorMode='ciclo'; state.categoryFilter={mode:'ciclo', value:'all'}; scheduleSave(); render(); });
+    <div class="tableCard"><table><thead><tr><th>Lote</th><th>Ocupación ciclo</th><th>Descanso actual</th><th>Regeneración</th><th>Hacienda</th><th>Cultivo/antecesor</th><th>Encierres</th><th>Mortandad</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+  $('#cycleApply')?.addEventListener('click', () => runUiAction(() => { state.cycleStart = readDateInput('#cycleStartInput', state.cycleStart); state.cycleEnd = readDateInput('#cycleEndInput', state.cycleEnd); state.colorMode='ciclo'; state.categoryFilter={mode:'ciclo', value:'all'}; scheduleSave(); render(); }));
   $$('[data-go-map-id]').forEach(btn => btn.addEventListener('click', () => { state.selectedId = btn.dataset.goMapId; state.view='map'; state.colorMode='ciclo'; state.categoryFilter={mode:'ciclo', value:'all'}; scheduleSave(); render(); }));
 }
 
@@ -4112,7 +4142,7 @@ function renderHistorialView(){
       <div class="field"><label>Rodeo / categoría</label><select id="histRodeo"><option value="all">Todos</option>${rodeoOpts}</select></div>
       <button id="histClear" class="ghost">Limpiar</button>
     </div>
-    ${activeFilterNotice()}<div class="movementLedger"><div class="listHeader"><div><h3>Movimientos de hacienda</h3><p>Un Administrador puede anular el último movimiento relacionado. El registro no se borra: queda marcado para auditoría.</p></div></div><div class="tableCard"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Rodeo / categoría</th><th>Estado</th><th>Registró</th><th></th></tr></thead><tbody>${movementRows}</tbody></table></div></div><div class="tableCard"><table><thead><tr><th>Fecha</th><th>Lote</th><th>Tipo</th><th>Registro detallado</th><th>Estado</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+    ${activeFilterNotice()}<div class="movementLedger"><div class="listHeader"><div><h3>Movimientos de hacienda</h3><p>Un Administrador puede anular el último movimiento relacionado. El registro no se borra: queda marcado para auditoría.</p></div></div><div class="tableCard"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Rodeo / categoría</th><th>Estado</th><th>Registró</th><th>Acciones</th></tr></thead><tbody>${movementRows}</tbody></table></div></div><div class="tableCard"><table><thead><tr><th>Fecha</th><th>Lote</th><th>Tipo</th><th>Registro detallado</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
   const setHf = patch => { state.histFilter = {...hf, ...patch}; render(); };
   $('#histLot')?.addEventListener('change', e => setHf({lot:e.target.value}));
   $('#histType')?.addEventListener('change', e => setHf({type:e.target.value}));
@@ -4172,10 +4202,13 @@ function renderAgendaView(){
   const duePlanned=common.filter(i=>i.source==='event'&&i.status==='planificado'&&i.date&&i.date<=today()),dueDone=common.filter(i=>i.source==='event'&&i.status==='realizado'&&i.date&&i.date<=today()&&eventWasPlanned(i)),complianceDen=duePlanned.length+dueDone.length,compliancePct=complianceDen?Math.round(dueDone.length/complianceDen*100):null;
   const option=(value,current,label=value)=>`<option value="${esc(value)}" ${String(current)===String(value)?'selected':''}>${esc(label)}</option>`,unique=key=>Array.from(new Set(all.map(i=>i[key]).filter(Boolean))).sort((a,b)=>String(a).localeCompare(String(b)));
   const lotOpts=Array.from(new Map(all.map(i=>[i.lotId,i])).values()).sort((a,b)=>sortedLotNumber(a.lot)-sortedLotNumber(b.lot)).map(i=>option(i.lotId,af.lot,i.lotNumber?`Lote ${i.lotNumber} · ${i.code}`:(i.code||'Área'))).join('');
-  const rows=items.map(i=>{const due=eventDueText(i),protectedEvent=i.ev&&(String(eventKind(i.ev)).startsWith('cattle_')||['grazing_period','mortandad','cattle_mortality','cattle_sale'].includes(String(eventKind(i.ev)))),plannedSale=i.source==='event'&&i.status==='planificado'&&normKey(i.type)==='venta',statusLabel=i.status==='planificado'?'Planificado':i.status==='realizado'?'Realizado':'Anulado';return `<tr class="${i.status==='anulado'?'catalogInactive':due.className==='overdue'?'vencRow':''}"><td class="num">${esc(fmtDateAR(i.date))}</td><td><b>${i.lotNumber?`Lote ${esc(i.lotNumber)}`:esc(i.code||'Área')}</b><br><small>${esc(i.lotNumber?i.code:'área')}</small></td><td><b>${esc(i.type)}</b><br><small>${esc([i.herd,i.category].filter(Boolean).join(' · '))}</small></td><td><b>${esc(i.title)}</b><br><small>${esc(i.notes||'')}</small></td><td>${esc(i.resp||'—')}</td><td><span class="eventState ${i.status}">${statusLabel}</span><br><small class="eventDue ${due.className}">${esc(due.text)}</small></td><td class="rowAction">${plannedSale?`<button class="small primary" data-event-sale="${esc(i.id)}" data-event-lot="${esc(i.lotId)}">Registrar venta</button>`:i.source==='event'&&i.status==='planificado'?`<button class="small primary" data-event-realize="${esc(i.id)}" data-event-lot="${esc(i.lotId)}">Realizada</button>`:''}${protectedEvent?'<span class="badge" title="Registro conectado y auditable">🔒</span>':''}<button class="small" data-go-map-id="${esc(i.lotId)}">Mapa</button>${pastureEventStyle(i.ev||{})?`<button class="small" data-event-gantt="${esc(i.id)}" data-event-lot="${esc(i.lotId)}">Gantt</button>`:''}</td></tr>`;}).join('')||'<tr><td colspan="7" class="eventsEmpty">No hay eventos para este modo y filtros.</td></tr>';
+  const rows=items.map(i=>{
+    const due=eventDueText(i),protectedEvent=i.ev&&(String(eventKind(i.ev)).startsWith('cattle_')||['grazing_period','mortandad','cattle_mortality','cattle_sale'].includes(String(eventKind(i.ev)))),plannedSale=i.source==='event'&&i.status==='planificado'&&normKey(i.type)==='venta',statusLabel=i.status==='planificado'?'Planificado':i.status==='realizado'?'Realizado':'Anulado',actionContext=[i.title,i.lotNumber?`Lote ${i.lotNumber}`:i.code].filter(Boolean).join(' · ');
+    return `<tr class="${i.status==='anulado'?'catalogInactive':due.className==='overdue'?'vencRow':''}"><td class="num">${esc(fmtDateAR(i.date))}</td><td><b>${i.lotNumber?`Lote ${esc(i.lotNumber)}`:esc(i.code||'Área')}</b><br><small>${esc(i.lotNumber?i.code:'área')}</small></td><td><b>${esc(i.type)}</b><br><small>${esc([i.herd,i.category].filter(Boolean).join(' · '))}</small></td><td><b>${esc(i.title)}</b><br><small>${esc(i.notes||'')}</small></td><td>${esc(i.resp||'—')}</td><td><span class="eventState ${i.status}">${statusLabel}</span><br><small class="eventDue ${due.className}">${esc(due.text)}</small></td><td class="rowAction">${plannedSale?`<button class="small primary" data-event-sale="${esc(i.id)}" data-event-lot="${esc(i.lotId)}" aria-label="Registrar venta: ${esc(actionContext)}">Registrar venta</button>`:i.source==='event'&&i.status==='planificado'?`<button class="small primary" data-event-realize="${esc(i.id)}" data-event-lot="${esc(i.lotId)}" aria-label="Marcar realizada: ${esc(actionContext)}">Realizada</button>`:''}${protectedEvent?'<span class="badge" title="Registro conectado y auditable">🔒</span>':''}<button class="small" data-go-map-id="${esc(i.lotId)}" aria-label="Ver en mapa: ${esc(actionContext)}">Mapa</button>${pastureEventStyle(i.ev||{})?`<button class="small" data-event-gantt="${esc(i.id)}" data-event-lot="${esc(i.lotId)}" aria-label="Ver en Gantt: ${esc(actionContext)}">Gantt</button>`:''}</td></tr>`;
+  }).join('')||'<tr><td colspan="7" class="eventsEmpty">No hay eventos para este modo y filtros.</td></tr>';
   const countBy=(records,key)=>{const m=new Map();for(const x of records){const value=key(x)||'Sin dato';m.set(value,(m.get(value)||0)+1);}return Array.from(m.entries());},byType=countBy(common,x=>x.type),byMonth=countBy(common.filter(x=>x.date),x=>x.date.slice(0,7)),byResp=countBy(pending,x=>x.resp||'Sin responsable'),byStatus=[['Planificados',pending.length],['Realizados',realized.length],['Anulados',anulled.length]];
   const analysis=`<div class="eventAnalysisGrid"><article class="eventAnalysisCard"><h3>Eventos por tipo</h3><p>Qué actividades concentran los registros del filtro.</p>${eventBarRows(byType,'#4f6f9f')}</article><article class="eventAnalysisCard"><h3>Estado del trabajo</h3><p>Planificado, confirmado como realizado y anulado.</p>${eventBarRows(byStatus,'#2f7d3a')}</article><article class="eventAnalysisCard"><h3>Evolución por mes</h3><p>Volumen de eventos registrados o programados.</p>${eventBarRows(byMonth,'#7b68a6')}</article><article class="eventAnalysisCard"><h3>Pendientes por responsable</h3><p>Carga operativa pendiente; “sin responsable” señala un dato a completar.</p>${eventBarRows(byResp,'#c07a28')}</article><div class="eventAnalysisNote"><b>Lectura responsable:</b> el cumplimiento se calcula sólo con tareas que tienen evidencia de haber sido planificadas y luego confirmadas. Una venta, mortandad, entrada u otro hecho cargado directamente como realizado no infla ese porcentaje. “Vencido” significa falta de confirmación en el sistema; no prueba que la tarea no se haya hecho.</div></div>`;
-  $('#main').innerHTML=`<section class="listView eventsView"><div class="agendaHeader"><div><h2>Eventos</h2><small>Planificación, hechos realizados y análisis operativo en un solo lugar.</small></div><span class="badge">${items.length} visibles · ${common.length} con filtros</span></div><div class="eventModeTabs"><button data-event-mode="pending" class="${mode==='pending'?'active':''}">Pendientes</button><button data-event-mode="all" class="${mode==='all'?'active':''}">Todos</button><button data-event-mode="analysis" class="${mode==='analysis'?'active':''}">Análisis</button></div><div class="eventKpiGrid"><div class="eventKpi" style="--event-kpi:#b9483e"><span>Vencidos</span><b>${overdue.length}</b><small>sin confirmar</small></div><div class="eventKpi" style="--event-kpi:#c07a28"><span>Próximos 7 días</span><b>${within(7).length}</b><small>incluye hoy</small></div><div class="eventKpi" style="--event-kpi:#94752b"><span>Próximos 14 días</span><b>${within(14).length}</b><small>ventana operativa</small></div><div class="eventKpi" style="--event-kpi:#4f6f9f"><span>Próximos 30 días</span><b>${within(30).length}</b><small>para organizar</small></div><div class="eventKpi" style="--event-kpi:#2f7d3a"><span>Realizados</span><b>${realized.length}</b><small>confirmados</small></div><div class="eventKpi" style="--event-kpi:#7162a8"><span>Cumplimiento verificable</span><b>${compliancePct===null?'—':compliancePct+'%'}</b><small>${complianceDen?`${dueDone.length}/${complianceDen} tareas debidas`:'sin base comparable'}</small></div></div><div class="histFilters"><div class="field"><label>Desde</label><input id="agFrom" type="date" value="${esc(af.from)}"></div><div class="field"><label>Hasta</label><input id="agTo" type="date" value="${esc(af.to)}"></div><div class="field"><label>Lote / área</label><select id="agLot"><option value="all">Todos</option>${lotOpts}</select></div><div class="field"><label>Tipo</label><select id="agType"><option value="all">Todos</option>${unique('type').map(v=>option(v,af.type)).join('')}</select></div><div class="field"><label>Rodeo</label><select id="agHerd"><option value="all">Todos</option>${unique('herd').map(v=>option(v,af.herd)).join('')}</select></div><div class="field"><label>Categoría</label><select id="agCategory"><option value="all">Todas</option>${unique('category').map(v=>option(v,af.category)).join('')}</select></div><div class="field"><label>Responsable</label><select id="agResp"><option value="all">Todos</option>${unique('resp').map(v=>option(v,af.resp)).join('')}</select></div><div class="field"><label>Estado</label><select id="agStatus" ${mode==='pending'?'disabled title="El modo Pendientes muestra sólo planificados"':''}><option value="all">Todos</option>${option('planificado',af.status,'Planificado')}${option('realizado',af.status,'Realizado')}${option('anulado',af.status,'Anulado')}</select></div><div class="field"><label>Buscar</label><input id="agSearch" value="${esc(af.search)}" placeholder="evento, lote, nota…"></div><button id="agClear" class="ghost">Limpiar</button></div>${mode==='analysis'?analysis:`<div class="tableCard eventsTable"><table><thead><tr><th>Fecha</th><th>Lote</th><th>Tipo / rodeo</th><th>Evento</th><th>Responsable</th><th>Estado / plazo</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`}</section>`;
+  $('#main').innerHTML=`<section class="listView eventsView"><div class="agendaHeader"><div><h2>Eventos</h2><small>Planificación, hechos realizados y análisis operativo en un solo lugar.</small></div><span class="badge">${items.length} visibles · ${common.length} con filtros</span></div><div class="eventModeTabs" role="group" aria-label="Modo de eventos"><button data-event-mode="pending" class="${mode==='pending'?'active':''}" aria-pressed="${mode==='pending'}">Pendientes</button><button data-event-mode="all" class="${mode==='all'?'active':''}" aria-pressed="${mode==='all'}">Todos</button><button data-event-mode="analysis" class="${mode==='analysis'?'active':''}" aria-pressed="${mode==='analysis'}">Análisis</button></div><div class="eventKpiGrid"><div class="eventKpi" style="--event-kpi:#b9483e"><span>Vencidos</span><b>${overdue.length}</b><small>sin confirmar</small></div><div class="eventKpi" style="--event-kpi:#c07a28"><span>Próximos 7 días</span><b>${within(7).length}</b><small>incluye hoy</small></div><div class="eventKpi" style="--event-kpi:#94752b"><span>Próximos 14 días</span><b>${within(14).length}</b><small>ventana operativa</small></div><div class="eventKpi" style="--event-kpi:#4f6f9f"><span>Próximos 30 días</span><b>${within(30).length}</b><small>para organizar</small></div><div class="eventKpi" style="--event-kpi:#2f7d3a"><span>Realizados</span><b>${realized.length}</b><small>confirmados</small></div><div class="eventKpi" style="--event-kpi:#7162a8"><span>Cumplimiento verificable</span><b>${compliancePct===null?'—':compliancePct+'%'}</b><small>${complianceDen?`${dueDone.length}/${complianceDen} tareas debidas`:'sin base comparable'}</small></div></div><div class="histFilters"><div class="field"><label>Desde</label><input id="agFrom" type="date" value="${esc(af.from)}"></div><div class="field"><label>Hasta</label><input id="agTo" type="date" value="${esc(af.to)}"></div><div class="field"><label>Lote / área</label><select id="agLot"><option value="all">Todos</option>${lotOpts}</select></div><div class="field"><label>Tipo</label><select id="agType"><option value="all">Todos</option>${unique('type').map(v=>option(v,af.type)).join('')}</select></div><div class="field"><label>Rodeo</label><select id="agHerd"><option value="all">Todos</option>${unique('herd').map(v=>option(v,af.herd)).join('')}</select></div><div class="field"><label>Categoría</label><select id="agCategory"><option value="all">Todas</option>${unique('category').map(v=>option(v,af.category)).join('')}</select></div><div class="field"><label>Responsable</label><select id="agResp"><option value="all">Todos</option>${unique('resp').map(v=>option(v,af.resp)).join('')}</select></div><div class="field"><label>Estado</label><select id="agStatus" ${mode==='pending'?'disabled title="El modo Pendientes muestra sólo planificados"':''}><option value="all">Todos</option>${option('planificado',af.status,'Planificado')}${option('realizado',af.status,'Realizado')}${option('anulado',af.status,'Anulado')}</select></div><div class="field"><label>Buscar</label><input id="agSearch" value="${esc(af.search)}" placeholder="evento, lote, nota…"></div><button id="agClear" class="ghost">Limpiar</button></div>${mode==='analysis'?analysis:`<div class="tableCard eventsTable"><table><thead><tr><th>Fecha</th><th>Lote</th><th>Tipo / rodeo</th><th>Evento</th><th>Responsable</th><th>Estado / plazo</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table></div>`}</section>`;
   const setAf=patch=>{state.agFilter={...af,...patch};scheduleSave();render();};
   $$('[data-event-mode]').forEach(button=>button.addEventListener('click',()=>{state.eventMode=button.dataset.eventMode;state.agFilter={...af,...(state.eventMode==='pending'?{status:'all'}:{})};scheduleSave();render();}));
   $('#agFrom')?.addEventListener('change',e=>setAf({from:parseDate(e.target.value)||''}));$('#agTo')?.addEventListener('change',e=>setAf({to:parseDate(e.target.value)||''}));$('#agLot')?.addEventListener('change',e=>setAf({lot:e.target.value}));$('#agType')?.addEventListener('change',e=>setAf({type:e.target.value}));$('#agHerd')?.addEventListener('change',e=>setAf({herd:e.target.value}));$('#agCategory')?.addEventListener('change',e=>setAf({category:e.target.value}));$('#agResp')?.addEventListener('change',e=>setAf({resp:e.target.value}));$('#agStatus')?.addEventListener('change',e=>setAf({status:e.target.value}));$('#agSearch')?.addEventListener('change',e=>setAf({search:e.target.value.trim()}));

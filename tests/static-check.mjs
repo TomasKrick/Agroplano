@@ -62,14 +62,22 @@ function includesAll(source,values,scope){
 
 // Identidad visible y aplicación integral.
 includesAll(html,[
-  'AgroPlano Gestión Demo','v1.3.0','DATOS FICTICIOS','NO USAR PARA OPERAR',
+  'AgroPlano Gestión Demo','v1.3.1','DATOS FICTICIOS','NO USAR PARA OPERAR',
   './i18n.js','./demo-data.js','./config.js','./cloud-sync.js','assets/plano-demo.svg','assets/plano-demo-en.svg',
   'id="languageSelect"','>English<','>Español<'
 ],'Aplicación');
 includesAll(i18nSource,[
   'agroplano_demo_language_v1','DEFAULT_LOCALE = "en"','window.AgroPlanoI18n',
-  'setLocale','getLocale','SYNTHETIC DATA'
+  'setLocale','getLocale','SYNTHETIC DATA',
+  '["aria-label", "placeholder", "title", "alt"]',
+  'Synthetic farm map for demonstration'
 ],'Interfaz bilingüe');
+includesAll(html,[
+  "parseDate(window.AGROPLANO_DEMO?.meta?.demoToday)",
+  'function runUiAction','function enhanceRenderedAccessibility',
+  "th[data-sort]{cursor:pointer}",'aria-pressed=',
+  'Marcar realizada:','>Acciones</th>'
+],'Pulido público y accesibilidad');
 for(const id of ['viewMap','viewHacienda','viewRodeos','viewPastoreo','viewCiclo','viewDashboard','viewCultivos','viewTable','viewHistorial','viewAgenda']){
   assert(new RegExp(`id=["']${id}["']`).test(html),`Falta la pestaña integral ${id}`);
 }
@@ -166,18 +174,18 @@ assert(mainWindow?.width===1366&&mainWindow?.height===768,'La ventana Tauri debe
 assert(mainWindow?.minWidth<=900&&mainWindow?.minHeight<=560,'La ventana debe poder reducirse sin bloquear notebooks');
 
 // Identidad separada del instalable.
-assert(rootPackage.name==='agroplano-demo'&&rootPackage.version==='1.3.0','La identidad npm raíz debe ser agroplano-demo v1.3.0');
+assert(rootPackage.name==='agroplano-demo'&&rootPackage.version==='1.3.1','La identidad npm raíz debe ser agroplano-demo v1.3.1');
 assert(rootPackage.private===true,'El paquete debe estar protegido contra publicación npm accidental');
 assert(rootPackage.author==='Tomás Krick'&&rootPackage.license==='MIT','El paquete raíz debe declarar autor y licencia MIT');
-assert(desktopPackage.name==='agroplano-demo-desktop'&&desktopPackage.version==='1.3.0','La identidad npm de escritorio debe ser propia y v1.3.0');
+assert(desktopPackage.name==='agroplano-demo-desktop'&&desktopPackage.version==='1.3.1','La identidad npm de escritorio debe ser propia y v1.3.1');
 assert(desktopPackage.author==='Tomás Krick'&&desktopPackage.license==='MIT','El paquete de escritorio debe declarar autor y licencia MIT');
 assert(desktopPackage.scripts?.build==='tauri build','El build de escritorio debe compilar Tauri');
-assert(tauriConfig.productName==='AgroPlano Demo'&&tauriConfig.version==='1.3.0','El instalador debe tener marca y versión propias');
+assert(tauriConfig.productName==='AgroPlano Demo'&&tauriConfig.version==='1.3.1','El instalador debe tener marca y versión propias');
 assert(tauriConfig.identifier==='com.agroplano.demo','El identificador Tauri debe ser com.agroplano.demo');
 assert(mainWindow?.title?.includes('AgroPlano Demo')&&mainWindow.title.includes('SYNTHETIC DATA'),'La ventana debe identificar claramente la demo');
 const targets=tauriConfig.bundle?.targets||[];
 assert(tauriConfig.bundle?.active===true&&['nsis','msi'].every(target=>targets.includes(target)),'El build Windows debe producir NSIS y MSI');
-assert(/^name\s*=\s*"agroplano_demo"\s*$/m.test(cargo)&&/^version\s*=\s*"1\.3\.0"\s*$/m.test(cargo),'La identidad Rust debe ser agroplano_demo v1.3.0');
+assert(/^name\s*=\s*"agroplano_demo"\s*$/m.test(cargo)&&/^version\s*=\s*"1\.3\.1"\s*$/m.test(cargo),'La identidad Rust debe ser agroplano_demo v1.3.1');
 assert(/^authors\s*=\s*\["Tomás Krick"\]\s*$/m.test(cargo)&&/^license\s*=\s*"MIT"\s*$/m.test(cargo),'Cargo debe declarar autor y licencia MIT');
 assert(manifest.name?.includes('AgroPlano')&&manifest.name?.includes('Demo'),'El manifiesto PWA debe conservar la identidad genérica');
 
@@ -316,4 +324,4 @@ assert(demo.lots.every(lot=>/^(?:AU|BR|CA|DE)-\d{2}$/.test(lot.code)),'Los códi
 assert(!/window\.CAMPO_DEMO\b/.test(demoSource+html),'No debe quedar el alias temporal del prototipo anterior');
 assert(!/(?:STORAGE_KEY|SYNC_CHANNEL_NAME|DB_NAME)\s*=\s*['"](?!agroplano[_-]demo)/.test(html+cloudSource),'Persistencia y canales deben usar namespace propio');
 
-console.log(`OK · AgroPlano Demo v1.3.0 · ${demo.lots.length} lotes · ${demo.herds.length} rodeos · app integral bilingüe, instalador y backend aislados · privacidad verificada`);
+console.log(`OK · AgroPlano Demo v1.3.1 · ${demo.lots.length} lotes · ${demo.herds.length} rodeos · app integral bilingüe, instalador y backend aislados · privacidad verificada`);

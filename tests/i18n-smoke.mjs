@@ -59,7 +59,7 @@ const chooseLanguage=async language=>{
   select.dispatchEvent(new Event('change',{bubbles:true}));
   await wait(40);
 };
-const spanishUiFragment=/[¿¡]|\b(?:lotes?|rodeos?|hacienda|cabezas?|cultivos?|ocupaci[oó]n|ocupad[oa]s?|descansos?|d[ií]as?|desde|hasta|plazo|fecha|entradas?|salidas?|venta|mortandad|movimientos?|categor[ií]as?|estado|eventos?|historial|mapa|todos|todas|sin|para|por|con|del|una?|incluye|mayor|faltan?|primero|s[oó]lo|cada|dentro|cu[aá]l|otros?|otras?|viene[ns]?|uso|cargad[oa]s?|datos|filtros|condici[oó]n|agua|forraje|pasto|abiert[oa]s?|objetivo|alcanzar(?:on|[aá]n)?|m[aá]s|menos|muestra|tiene[ns]?|mismo|misma|varios?|puede[ns]?|tareas?|trabajo|registro|tabla|filas?|opcional|disponibilidad|comparaci[oó]n|registrad[oa]s?|planificad[oa]s?|realizad[oa]s?|anulad[oa]s?|pendientes?|revisar|cargar|editar|mostrar|filtrar|buscar|anterior|siguiente|superficie|responsable|calidad|problemas?|agr[ií]col[ao]s?|ganader[oa]s?|siembra|labor|ubicaci[oó]n|recorrido|per[ií]odos?|an[aá]lisis|gesti[oó]n|operativ[oa]s?|galp[oó]n|configurad[oa]s?|verificar|observaci[oó]n|duraci[oó]n|curso|plano|planilla|eleg[ií]|demostraci[oó]n|fictici[oa]s?|simult[aá]neos?|confirmad[oa]s?|pasad[oa]s?|marcar|asignar|m[ií]nimo)\b/iu;
+const spanishUiFragment=/[¿¡]|\b(?:lotes?|rodeos?|hacienda|cabezas?|cultivos?|ocupaci[oó]n|ocupad[oa]s?|descansos?|d[ií]as?|desde|hasta|plazo|fecha|entradas?|salidas?|venta|mortandad|movimientos?|categor[ií]as?|estado|eventos?|historial|mapa|todos|todas|sin|para|por|con|del|una?|incluye|mayor|faltan?|primero|s[oó]lo|cada|dentro|cu[aá]l|otros?|otras?|viene[ns]?|uso|cargad[oa]s?|datos|filtros|condici[oó]n|agua|forraje|pasto|abiert[oa]s?|objetivo|alcanzar(?:on|[aá]n)?|m[aá]s|menos|muestra|tiene[ns]?|mismo|misma|varios?|puede[ns]?|tareas?|trabajo|registro|tabla|filas?|opcional|disponibilidad|comparaci[oó]n|registrad[oa]s?|planificad[oa]s?|realizad[oa]s?|anulad[oa]s?|pendientes?|revisar|cargar|editar|mostrar|filtrar|buscar|anterior|siguiente|superficie|responsable|calidad|problemas?|agr[ií]col[ao]s?|ganader[oa]s?|siembra|labor|ubicaci[oó]n|recorrido|per[ií]odos?|an[aá]lisis|gesti[oó]n|operativ[oa]s?|galp[oó]n|configurad[oa]s?|verificar|observaci[oó]n|duraci[oó]n|curso|plano|planilla|eleg[ií]|demostraci[oó]n|fictici[oa]s?|simult[aá]neos?|confirmad[oa]s?|pasad[oa]s?|marcar|asignar|m[ií]nimo|quitar|acceso|lleva|ficha|remanente|guardando|sincronizaci[oó]n|antecesor|asociad[oa]|sombra|monte|terneras|novillos|colza|avena|moha|anual|combinaciones|cobertura|coincidencia|evaluad[oa]s?|libre)\b|\bant\./iu;
 const englishResidues=root=>{
   const values=[];
   const record=(kind,value)=>{
@@ -72,8 +72,8 @@ const englishResidues=root=>{
     if(node.parentElement?.closest('script,style,template,[data-i18n-skip]'))continue;
     record('text',node.nodeValue);
   }
-  for(const element of root.querySelectorAll('[aria-label],[title],[placeholder]')){
-    for(const attribute of ['aria-label','title','placeholder']){
+  for(const element of root.querySelectorAll('[aria-label],[title],[placeholder],[alt]')){
+    for(const attribute of ['aria-label','title','placeholder','alt']){
       if(element.hasAttribute(attribute))record(attribute,element.getAttribute(attribute));
     }
   }
@@ -100,6 +100,8 @@ assert.equal(document.querySelector('#languageSelect')?.value,'en');
 assert.equal(document.querySelector('#viewMap')?.textContent.trim(),'Map');
 assert.equal(document.querySelector('#viewHacienda')?.textContent.trim(),'Livestock');
 assert.equal(document.querySelector('.mapImg')?.getAttribute('src'),'assets/plano-demo-en.svg');
+assert.equal(document.querySelector('.mapImg')?.getAttribute('alt'),'Synthetic farm map for demonstration');
+assert.match(document.querySelector('#syncStatus')?.getAttribute('aria-label')||'',/^Sync status:/);
 assert.match(document.querySelector('#activeWorkspaceMeta')?.textContent||'',/SYNTHETIC DATA/);
 assert.equal(w.AgroPlanoI18n.formatDate('2026-07-14'),'07/14/2026');
 assert.equal(w.AgroPlanoI18n.t('⚠ Respaldo: hace 7 días'),'⚠ Backup: 7 days ago');
@@ -122,8 +124,22 @@ for(const [selector,label] of englishViews){
   click(selector);
   await wait(25);
   assert(document.querySelector('#main')?.textContent.includes(label),`${selector} did not render its English heading: ${label}`);
+  if(selector==='#viewHacienda')assert.equal(document.querySelector('.dateInput')?.getAttribute('placeholder'),'mm/dd/yyyy');
   assertEnglishView(selector);
 }
+
+click('#viewAgenda');
+await wait(25);
+const eventModeButtons=[...document.querySelectorAll('[data-event-mode]')];
+assert(eventModeButtons.length===3&&eventModeButtons.every(button=>button.hasAttribute('aria-pressed')),'Event modes must expose their selected state');
+assert.equal(eventModeButtons.filter(button=>button.getAttribute('aria-pressed')==='true').length,1,'Exactly one event mode must be selected');
+const completedButton=document.querySelector('[data-event-realize]');
+assert(completedButton,'The synthetic fixture must expose a completable event');
+assert.match(completedButton.getAttribute('aria-label')||'',/^Mark completed:/);
+const completedStyle=w.getComputedStyle(completedButton);
+assert.notEqual(completedStyle.backgroundColor,'rgb(255, 255, 255)','Primary event actions must not render white text on white');
+assert([...document.querySelectorAll('#main th')].every(th=>th.textContent.trim()),'Every data-table column must have a visible header');
+assert([...document.querySelectorAll('#main .field > label')].every(label=>label.htmlFor&&document.getElementById(label.htmlFor)),'Rendered form labels must identify their controls');
 
 await chooseLanguage('es');
 assert.equal(w.AgroPlanoI18n.getLocale(),'es');
